@@ -120,3 +120,50 @@ def ShowChannelList():
         print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
             i+1, dates, channel_name, post_counts, value))
         sleep(0.3)
+
+
+def scatter_handel(data):
+    sd = {}
+    xp = []
+    yp = []
+
+    try:
+        for p in data:
+            dt = datetime.fromtimestamp(p['s'])
+            xy = dt.year - 2013
+            if dt.day >= 1 and dt.day <= 6:
+                xy += 0.16
+            elif dt.day > 6 and dt.day <= 12:
+                xy += 0.32
+            elif dt.day > 12 and dt.day <= 18:
+                xy += 0.48
+            elif dt.day > 18 and dt.day <= 24:
+                xy += 0.64
+            elif dt.day > 24 and dt.day <= 30:
+                xy += 0.80
+
+            ym = dt.month
+            match dt.day:
+                case 1 | 7 | 13 | 19 | 25:
+                    ym += 0.11
+                case 2 | 8 | 14 | 20 | 26:
+                    ym += 0.24
+                case 3 | 9 | 15 | 21 | 27:
+                    ym += 0.37
+                case 4 | 10 | 16 | 22 | 28:
+                    ym += 0.5
+                case 5 | 11 | 17 | 23 | 29:
+                    ym += 0.63
+                case 6 | 12 | 18 | 24 | 30:
+                    ym += 0.76
+
+            if f"{xy}{ym}" in sd:
+                sd[f"{xy}{ym}"] += 1
+            else:
+                sd[f"{xy}{ym}"] = 1
+                xp.append(xy)
+                yp.append(ym)
+    except:
+        pass
+
+    return xp, yp
