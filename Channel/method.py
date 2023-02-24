@@ -157,13 +157,14 @@ def scatter_handel(data):
                 case 6 | 12 | 18 | 24 | 30:
                     ym += 0.76
 
-            if f"{xy}{ym}" in sd:
-                sd[f"{xy}{ym}"] += 1
+            dname = cttdt(p['s'])
+            if dname in sd:
+                sd[dname] += 1
             else:
-                sd[f"{xy}{ym}"] = 1
+                sd[dname] = 1
                 xp.append(xy)
                 yp.append(ym)
     except:
         pass
 
-    return xp, yp
+    return xp, yp, sd
