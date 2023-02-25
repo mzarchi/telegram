@@ -82,7 +82,7 @@ def hm(hmvalue):
     return int(time.mktime(datetime.datetime.strptime(hmvalue, "%H:%M").timetuple()))
 
 
-def cttdt(ts):
+def cttdt(ts, rs=True):
     dt = datetime.fromtimestamp(ts)
     month = ""
     if dt.month < 10:
@@ -95,7 +95,11 @@ def cttdt(ts):
         day = f"0{dt.day}"
     else:
         day = dt.day
-    return "{}.{}.{}".format(dt.year, month, day)
+
+    if rs:
+        return "{}.{}.{}".format(dt.year, month, day)
+    else:
+        return "{}{}{}".format(dt.year, month, day)
 
 
 def ShowChannelList():
@@ -122,49 +126,86 @@ def ShowChannelList():
         sleep(0.3)
 
 
+def convert_ts_to_point(timestamp):
+    dt = datetime.fromtimestamp(timestamp)
+    xy = dt.year - 2013
+    match dt.day:
+        case 1 | 7 | 13 | 19 | 25:
+            xy += 0.16
+        case 2 | 8 | 14 | 20 | 26:
+            xy += 0.29
+        case 3 | 9 | 15 | 21 | 27:
+            xy += 0.46
+        case 4 | 10 | 16 | 22 | 28:
+            xy += 0.59
+        case 5 | 11 | 17 | 23 | 29:
+            xy += 0.72
+        case 6 | 12 | 18 | 24 | 30 | 31:
+            xy += 0.85
+
+    ym = dt.month - 1
+    if dt.day >= 1 and dt.day <= 6:
+        ym += 0.18
+    elif dt.day > 6 and dt.day <= 12:
+        ym += 0.34
+    elif dt.day > 12 and dt.day <= 18:
+        ym += 0.50
+    elif dt.day > 18 and dt.day <= 24:
+        ym += 0.66
+    elif dt.day > 24 and dt.day <= 31:
+        ym += 0.82
+
+    return xy, ym
+
+
 def scatter_handel(data):
     sd = {}
-    xp = []
-    yp = []
+    ds = []
+    xp = {
+        'g1': [],
+        'g2': [],
+        'g3': [],
+        'g4': []
+    }
+
+    yp = {
+        'g1': [],
+        'g2': [],
+        'g3': [],
+        'g4': []
+    }
+
+    for p in data:
+        dt = datetime.fromtimestamp(p['s'])
+        dname = cttdt(p['s'])
+        if dname in sd:
+            sd[dname] += 1
+        else:
+            sd[dname] = 1
+
+    today = convert_ts_to_point(int(time.time()))
+    unit_value = max(sd.values()) / 3
+    uv2 = unit_value * 2
+    uv3 = unit_value * 3
 
     try:
         for p in data:
-            dt = datetime.fromtimestamp(p['s'])
-            xy = dt.year - 2013
-            if dt.day >= 1 and dt.day <= 6:
-                xy += 0.18
-            elif dt.day > 6 and dt.day <= 12:
-                xy += 0.34
-            elif dt.day > 12 and dt.day <= 18:
-                xy += 0.50
-            elif dt.day > 18 and dt.day <= 24:
-                xy += 0.66
-            elif dt.day > 24 and dt.day <= 31:
-                xy += 0.82
-
-            ym = dt.month - 1
-            match dt.day:
-                case 1 | 7 | 13 | 19 | 25:
-                    ym += 0.16
-                case 2 | 8 | 14 | 20 | 26:
-                    ym += 0.29
-                case 3 | 9 | 15 | 21 | 27:
-                    ym += 0.46
-                case 4 | 10 | 16 | 22 | 28:
-                    ym += 0.59
-                case 5 | 11 | 17 | 23 | 29:
-                    ym += 0.72
-                case 6 | 12 | 18 | 24 | 30 | 31:
-                    ym += 0.85
-
+            xy, ym = convert_ts_to_point(p['s'])
             dname = cttdt(p['s'])
-            if dname in sd:
-                sd[dname] += 1
-            else:
-                sd[dname] = 1
-                xp.append(xy)
-                yp.append(ym)
+            dsv = cttdt(p['s'], False)
+            if not dsv in ds:
+                ds.append(dsv)
+                if sd[dname] >= 1 and sd[dname] < uv2:
+                    xp['g3'].append(xy)
+                    yp['g3'].append(ym)
+                elif sd[dname] >= uv2 and sd[dname] < uv3:
+                    xp['g2'].append(xy)
+                    yp['g2'].append(ym)
+                elif sd[dname] >= uv3:
+                    xp['g1'].append(xy)
+                    yp['g1'].append(ym)
+
     except:
         pass
 
-    return xp, yp, sd
+    return xp, yp, today
