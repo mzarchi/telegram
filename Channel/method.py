@@ -139,7 +139,7 @@ def scatter_handel(data):
                 xy += 0.48
             elif dt.day > 18 and dt.day <= 24:
                 xy += 0.64
-            elif dt.day > 24 and dt.day <= 30:
+            elif dt.day > 24 and dt.day <= 31:
                 xy += 0.80
 
             ym = dt.month
@@ -154,7 +154,7 @@ def scatter_handel(data):
                     ym += 0.5
                 case 5 | 11 | 17 | 23 | 29:
                     ym += 0.63
-                case 6 | 12 | 18 | 24 | 30:
+                case 6 | 12 | 18 | 24 | 30 | 31:
                     ym += 0.76
 
             dname = cttdt(p['s'])
