@@ -132,30 +132,30 @@ def scatter_handel(data):
             dt = datetime.fromtimestamp(p['s'])
             xy = dt.year - 2013
             if dt.day >= 1 and dt.day <= 6:
-                xy += 0.16
+                xy += 0.18
             elif dt.day > 6 and dt.day <= 12:
-                xy += 0.32
+                xy += 0.34
             elif dt.day > 12 and dt.day <= 18:
-                xy += 0.48
+                xy += 0.50
             elif dt.day > 18 and dt.day <= 24:
-                xy += 0.64
+                xy += 0.66
             elif dt.day > 24 and dt.day <= 31:
-                xy += 0.80
+                xy += 0.82
 
-            ym = dt.month
+            ym = dt.month - 1
             match dt.day:
                 case 1 | 7 | 13 | 19 | 25:
-                    ym += 0.11
+                    ym += 0.16
                 case 2 | 8 | 14 | 20 | 26:
-                    ym += 0.24
+                    ym += 0.29
                 case 3 | 9 | 15 | 21 | 27:
-                    ym += 0.37
+                    ym += 0.46
                 case 4 | 10 | 16 | 22 | 28:
-                    ym += 0.5
+                    ym += 0.59
                 case 5 | 11 | 17 | 23 | 29:
-                    ym += 0.63
+                    ym += 0.72
                 case 6 | 12 | 18 | 24 | 30 | 31:
-                    ym += 0.76
+                    ym += 0.85
 
             dname = cttdt(p['s'])
             if dname in sd:
