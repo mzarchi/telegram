@@ -9,6 +9,8 @@
 ## Channel Anaysis
 
 - [x] Check if data set is exist
-    - [ ] if exist sort, if not get data
-- [ ] Get Data
-- [ ] Save Data
+    - [x] if exist sort, if not get data
+- [x] Get Data
+- [x] Save Data
+- [x] Draw scatter graph
+- [ ] Draw monthly graph
