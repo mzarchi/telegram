@@ -20,9 +20,9 @@ def get_comments(client, channel, message_id):
     return data
 
 
-# https://t.me/Ghalomaghal/8702
-chennel_link = "Ghalomaghal"
-post_id = 8702
+# https://t.me/Arzoyman33/5082
+chennel_link = "Arzoyman33"
+post_id = 5082
 user_ids = []
 cmd = get_comments(tclient, chennel_link, post_id)
 f = open(f"{chennel_link}-{post_id}.txt", "a")

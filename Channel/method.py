@@ -161,6 +161,7 @@ def convert_ts_to_point(timestamp):
 def scatter_handel(data):
     sd = {}
     ds = []
+    distance_ts = []
     xp = {
         'g1': [],
         'g2': [],
@@ -189,7 +190,8 @@ def scatter_handel(data):
     uv3 = unit_value * 3
 
     try:
-        for p in data:
+        for i, p in enumerate(data):
+            distance_ts.append(data[i+1]['s'] - data[i]['s'])
             xy, ym = convert_ts_to_point(p['s'])
             dname = cttdt(p['s'])
             dsv = cttdt(p['s'], False)
@@ -208,4 +210,4 @@ def scatter_handel(data):
     except:
         pass
 
-    return xp, yp, today
+    return xp, yp, today, distance_ts

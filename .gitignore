@@ -1,6 +1,7 @@
 __pycache__/
 .ipynb_checkpoints/
 *.json
+*.txt
 my.session
 my.session-journal
 appconfig.py
