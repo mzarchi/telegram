@@ -1,5 +1,6 @@
 __pycache__/
 .ipynb_checkpoints/
+*.json
 my.session
 appconfig.py
-*.json
+TestAnalysis.ipynb
