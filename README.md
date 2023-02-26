@@ -7,7 +7,7 @@
     > <sub>At this step, you must have **api_id** and **api_hash**</sub>
 
 ## Channel Anaysis
-![](./assets/images/plot-1.jpg =250x250)
+<img src="./assets/images/plot-1.jpg" width="50" height="50">
 
 - [x] Check if data set is exist
     - [x] if exist sort, if not get data
