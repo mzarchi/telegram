@@ -13,4 +13,4 @@ try:
 except telethon.errors.SessionPasswordNeededError:
     password = input("Insert Your 2-Step Code: ")
     client.sign_in(password=password)
-print("Successfully Connect!")
+print("Successfully Connect!\nSession created at sessions dir")
