@@ -211,3 +211,12 @@ def scatter_handel(data):
         pass
 
     return xp, yp, today, distance_ts
+
+
+def show_day_distance(distance, day_count):
+    distance.sort(reverse=True)
+    print("Big distance from two post (day):")
+    for i, d in enumerate(distance):
+        if (i + 1) > day_count:
+            break
+        print("{} days".format(int(d / 86400)))
