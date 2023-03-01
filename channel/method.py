@@ -1,3 +1,4 @@
+import appconfig as ac
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
 from datetime import datetime
@@ -9,7 +10,6 @@ import os
 
 import sys
 sys.path.append('../config')
-import appconfig as ac
 
 
 def fe(name):
@@ -223,3 +223,31 @@ def show_day_distance(distance, day_count):
         if (i + 1) > day_count:
             break
         print("{} days".format(int(d / 86400)))
+
+
+def get_vfm_data(data):
+    match_code = 3
+
+    cotr = 1
+    cont = []
+    view = []
+    forw = []
+    repl = []
+    view_dict = {}
+    forw_dict = {}
+    repl_dict = {}
+
+    for post in data:
+        match match_code:
+            case 0:
+                if (post['w'] == 0):  # No limit
+                    cont.append(cotr)
+                    view.append(post['v'])
+                    forw.append(post['f'])
+                    repl.append(post['m'])
+                    view_dict.update({post['i']: post['v']})
+                    forw_dict.update({post['i']: post['f']})
+                    repl_dict.update({post['i']: post['m']})
+
+    result_dict = {}
+    return cotr, cont, view, forw, repl
