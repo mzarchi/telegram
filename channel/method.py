@@ -225,7 +225,7 @@ def show_day_distance(distance, day_count):
         print("{} days".format(int(d / 86400)))
 
 
-def get_vfm_data(data, match_code):
+def get_vfm_data(data, match_code, **p):
     counter = 1
     result_dict = {
         'cont': [],
@@ -241,6 +241,16 @@ def get_vfm_data(data, match_code):
         match match_code:
             case 0:
                 if (post['w'] == 0):  # No limit
+                    result_dict['cont'].append(counter)
+                    result_dict['view'].append(post['v'])
+                    result_dict['forw'].append(post['f'])
+                    result_dict['repl'].append(post['m'])
+                    result_dict['view_dict'].update({post['i']: post['v']})
+                    result_dict['forw_dict'].update({post['i']: post['f']})
+                    result_dict['repl_dict'].update({post['i']: post['m']})
+
+            case 1:
+                if (post['s'] < p['de'] and post['s'] > p['ds']):  # DateTime limit
                     result_dict['cont'].append(counter)
                     result_dict['view'].append(post['v'])
                     result_dict['forw'].append(post['f'])
