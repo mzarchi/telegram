@@ -1,10 +1,13 @@
 from telethon.sync import TelegramClient
+import config.appconfig as ac
 import telethon
+import sys
+sys.path.append('../GitHub')
 
 phone = input("Insert Your Phone: ")
 name = phone
 client = TelegramClient(
-    f'../sessions/{name.replace("+", "")}', 'api_id', 'api_hash')
+    f'../sessions/{name.replace("+", "")}', ac.api_id, ac.api_hash)
 client.connect()
 client.send_code_request(phone, force_sms=False)
 value = input("Insert Login Code: ")
