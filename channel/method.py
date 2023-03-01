@@ -9,7 +9,7 @@ import os
 
 import sys
 sys.path.append('../config')
-import appconfig as cf
+import appconfig as ac
 
 
 def fe(name):
