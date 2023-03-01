@@ -225,29 +225,29 @@ def show_day_distance(distance, day_count):
         print("{} days".format(int(d / 86400)))
 
 
-def get_vfm_data(data):
-    match_code = 3
-
-    cotr = 1
-    cont = []
-    view = []
-    forw = []
-    repl = []
-    view_dict = {}
-    forw_dict = {}
-    repl_dict = {}
+def get_vfm_data(data, match_code):
+    counter = 1
+    result_dict = {
+        'cont': [],
+        'view': [],
+        'forw': [],
+        'repl': [],
+        'view_dict': {},
+        'forw_dict': {},
+        'repl_dict': {},
+    }
 
     for post in data:
         match match_code:
             case 0:
                 if (post['w'] == 0):  # No limit
-                    cont.append(cotr)
-                    view.append(post['v'])
-                    forw.append(post['f'])
-                    repl.append(post['m'])
-                    view_dict.update({post['i']: post['v']})
-                    forw_dict.update({post['i']: post['f']})
-                    repl_dict.update({post['i']: post['m']})
+                    result_dict['cont'].append(counter)
+                    result_dict['view'].append(post['v'])
+                    result_dict['forw'].append(post['f'])
+                    result_dict['repl'].append(post['m'])
+                    #view_dict.update({post['i']: post['v']})
+                    #forw_dict.update({post['i']: post['f']})
+                    #repl_dict.update({post['i']: post['m']})
 
-    result_dict = {}
-    return cotr, cont, view, forw, repl
+        counter += 1
+    return result_dict
