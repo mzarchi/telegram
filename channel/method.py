@@ -245,9 +245,9 @@ def get_vfm_data(data, match_code):
                     result_dict['view'].append(post['v'])
                     result_dict['forw'].append(post['f'])
                     result_dict['repl'].append(post['m'])
-                    #view_dict.update({post['i']: post['v']})
-                    #forw_dict.update({post['i']: post['f']})
-                    #repl_dict.update({post['i']: post['m']})
+                    result_dict['view_dict'].update({post['i']: post['v']})
+                    result_dict['forw_dict'].update({post['i']: post['f']})
+                    result_dict['repl_dict'].update({post['i']: post['m']})
 
         counter += 1
     return result_dict
