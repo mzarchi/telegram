@@ -1,16 +1,15 @@
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
-import config.appconfig as ac
 from datetime import datetime
 from os.path import exists
 from time import sleep
 import time
 import json
-import sys
 import os
 
-
-sys.path.append('../GitHub')
+import sys
+sys.path.append('../config')
+import appconfig as cf
 
 
 def fe(name):
