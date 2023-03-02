@@ -273,5 +273,15 @@ def get_vfm_data(data, match_code, **p):
                         result_dict['forw_dict'].update({post['i']: post['f']})
                         result_dict['repl_dict'].update({post['i']: post['m']})
 
+            case 4:
+                if (post['f'] < p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
+                    result_dict['cont'].append(counter)
+                    result_dict['view'].append(post['v'])
+                    result_dict['forw'].append(post['f'])
+                    result_dict['repl'].append(post['m'])
+                    result_dict['view_dict'].update({post['i']: post['v']})
+                    result_dict['forw_dict'].update({post['i']: post['f']})
+                    result_dict['repl_dict'].update({post['i']: post['m']})
+
         counter += 1
     return result_dict
