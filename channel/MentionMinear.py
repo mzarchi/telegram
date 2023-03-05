@@ -1,5 +1,9 @@
 from telethon.sync import TelegramClient
-import config.appconfig as ac
+
+import sys
+sys.path.append('./config')
+import appconfig as ac
+
 
 tclient = TelegramClient('../sessions/my', ac.api_id, ac.api_hash)
 
@@ -20,12 +24,12 @@ def get_comments(client, channel, message_id):
     return data
 
 
-post_link = "https://t.me/MohammadZarchi/111"
+post_link = "https://t.me/Ghalomaghal/8849"
 cd = post_link.split('/')
 post_id = int(cd[4])
 user_ids = []
 cmd = get_comments(tclient, cd[3], post_id)
-f = open(f"Channel/ChannelMention/{cd[3]}-{post_id}.txt", "a")
+f = open(f"channel/ChannelMention/{cd[3]}-{post_id}.txt", "a")
 for i, p in enumerate(cmd):
     if not cmd[p] in user_ids:
         msg = f"{i+1} - https://t.me/{cd[3]}/{post_id}?comment={p}"
