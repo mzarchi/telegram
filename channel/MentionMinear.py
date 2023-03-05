@@ -30,11 +30,13 @@ post_id = int(cd[4])
 user_ids = []
 cmd = get_comments(tclient, cd[3], post_id)
 f = open(f"channel/ChannelMention/{cd[3]}-{post_id}.txt", "a")
-for i, p in enumerate(cmd):
+counter = 1
+for p in cmd:
     if not cmd[p] in user_ids:
-        msg = f"{i+1} - https://t.me/{cd[3]}/{post_id}?comment={p}"
+        msg = f"{counter} - https://t.me/{cd[3]}/{post_id}?comment={p}"
         user_ids.append(cmd[p])
         f.write(msg + "\n")
         print(msg)
+        counter += 1
 
 f.close()
