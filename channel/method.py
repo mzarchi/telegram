@@ -1,4 +1,3 @@
-import appconfig as ac
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
 from datetime import datetime
@@ -10,6 +9,7 @@ import os
 
 import sys
 sys.path.append('../config')
+import appconfig as ac
 
 
 def fe(name):
@@ -227,38 +227,41 @@ def show_day_distance(distance, day_count):
 
 def get_vfm_data(data, match_code, **p):
     """
-        0 : No limit *
-        1 : DateTime limit *
-        2 : TimeRange limit
-        3 : View limit *
-        4 : Forward limit *
-        5 : Mention limit
-        6 : ID limit
-        7 : is Forward
-
-       12 : DateTime & TimeRange limit
-       13 : DateTime & View limit
-       14 : DateTime & Forward limit
-       15 : DateTime & Mention limit
-       23 : TimeRange & View limit
-       24 : TimeRange & Forward limit
-       25 : TimeRange & Mention limit
-       34 : View & Forward limit
-       35 : View & Mention limit
-       45 : Forward & Mention limit
-
-      123 : DateTime & TimeRange & View limit
-      124 : DateTime & TimeRange & Forward limit
-      125 : DateTime & TimeRange & Mention limit
-      234 : TimeRange & Favorite & Forward limit
-      235 : TimeRange & Favorite & Mention limit
-      345 : View & Forward & Mention limit
-
-     1234 : DateTime & TimeRange & View & Forward limit
-     1235 : DateTime & TimeRange & View & Mention limit
-
-    12345 : DateTime & TimeRange & View & Forward & Mention limit
+        +-----------------------+
+        | 0 : No limit *        |
+        | 1 : DateTime limit *  |
+        | 2 : TimeRange limit   |
+        | 3 : View limit *      |
+        | 4 : Forward limit *   |
+        | 5 : Mention limit     |
+        | 6 : ID limit          |
+        | 7 : is Forward        |
+        +-----------------------------------+
+        | 12 : DateTime & TimeRange limit   |
+        | 13 : DateTime & View limit        |
+        | 14 : DateTime & Forward limit     | 
+        | 15 : DateTime & Mention limit     |
+        | 23 : TimeRange & View limit       |
+        | 24 : TimeRange & Forward limit    |
+        | 25 : TimeRange & Mention limit    |
+        | 34 : View & Forward limit         |
+        | 35 : View & Mention limit         |
+        | 45 : Forward & Mention limit      |
+        +----------------------------------------------+
+        | 123 : DateTime & TimeRange & View limit      |
+        | 124 : DateTime & TimeRange & Forward limit   |
+        | 125 : DateTime & TimeRange & Mention limit   |
+        | 234 : TimeRange & Favorite & Forward limit   |
+        | 235 : TimeRange & Favorite & Mention limit   |
+        | 345 : View & Forward & Mention limit         |
+        +------------------------------------------------------+
+        | 1234 : DateTime & TimeRange & View & Forward limit   |
+        | 1235 : DateTime & TimeRange & View & Mention limit   |
+        +-----------------------------------------------------------------+
+        | 12345 : DateTime & TimeRange & View & Forward & Mention limit   |
+        +-----------------------------------------------------------------+
     """
+
     counter = 1
     result_dict = {
         'cont': [],
@@ -283,7 +286,7 @@ def get_vfm_data(data, match_code, **p):
                     result_dict['repl_dict'].update({post['i']: post['m']})
 
             case 1:
-                if (post['s'] < p['de'] and post['s'] > p['ds']):  # DateTime limit
+                if (post['s'] < p['datetime_end'] and post['s'] > p['datetime_start']):  # DateTime limit
                     result_dict['cont'].append(counter)
                     result_dict['view'].append(post['v'])
                     result_dict['forw'].append(post['f'])
