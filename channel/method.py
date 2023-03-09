@@ -7,14 +7,9 @@ import time
 import json
 import os
 
-
-def config(jupyter=True):
-    import sys
-    if jupyter:
-        sys.path.append('../config')
-    else:
-        sys.path.append('./config')
-    import appconfig as ac
+import sys
+sys.path.append('../config')
+import appconfig as ac
 
 
 def fe(name):
