@@ -1,8 +1,8 @@
-import config.appconfig as ac
 from telethon.sync import TelegramClient
 from telethon import functions
 import sys
 sys.path.append('../GitHub')
+import config.appconfig as ac
 
 with TelegramClient('../sessions/my', ac.api_id, ac.api_hash) as client:
     result = client(functions.contacts.GetContactsRequest(hash=0))

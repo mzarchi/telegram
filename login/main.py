@@ -1,8 +1,8 @@
 from telethon.sync import TelegramClient
-import config.appconfig as ac
 import telethon
 import sys
 sys.path.append('../GitHub')
+import config.appconfig as ac
 
 phone = input("Insert Your Phone: ")
 name = phone
