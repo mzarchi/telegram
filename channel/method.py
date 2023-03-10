@@ -293,7 +293,7 @@ def get_vfm_data(data, match_code, **p):
                 pass
 
             case 3:
-                if (post['w'] == 0):  # View limit
+                if (post['w'] == 0):
                     if (post['v'] < p['max_view'] and post['v'] > p['min_view']):
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
@@ -304,14 +304,26 @@ def get_vfm_data(data, match_code, **p):
                         result_dict['repl_dict'].update({post['i']: post['m']})
 
             case 4:
-                if (post['f'] < p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
-                    result_dict['cont'].append(counter)
-                    result_dict['view'].append(post['v'])
-                    result_dict['forw'].append(post['f'])
-                    result_dict['repl'].append(post['m'])
-                    result_dict['view_dict'].update({post['i']: post['v']})
-                    result_dict['forw_dict'].update({post['i']: post['f']})
-                    result_dict['repl_dict'].update({post['i']: post['m']})
+                if (post['w'] == 0):
+                    if (post['f'] < p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
+                        result_dict['cont'].append(counter)
+                        result_dict['view'].append(post['v'])
+                        result_dict['forw'].append(post['f'])
+                        result_dict['repl'].append(post['m'])
+                        result_dict['view_dict'].update({post['i']: post['v']})
+                        result_dict['forw_dict'].update({post['i']: post['f']})
+                        result_dict['repl_dict'].update({post['i']: post['m']})
+
+            case 5:
+                if (post['w'] == 0):
+                    if (post['m'] < p['max_mention'] and post['m'] > p['min_mention']):  # Mention limit
+                        result_dict['cont'].append(counter)
+                        result_dict['view'].append(post['v'])
+                        result_dict['forw'].append(post['f'])
+                        result_dict['repl'].append(post['m'])
+                        result_dict['view_dict'].update({post['i']: post['v']})
+                        result_dict['forw_dict'].update({post['i']: post['f']})
+                        result_dict['repl_dict'].update({post['i']: post['m']})
 
         counter += 1
     return result_dict
