@@ -232,8 +232,8 @@ def get_vfm_data(data, match_code, **p):
         | 2 : TimeRange limit
         | 3 : View limit *
         | 4 : Forward limit *
-        | 5 : Mention limit
-        | 6 : ID limit
+        | 5 : Mention limit *
+        | 6 : ID limit *
         | 7 : is Forward
         | 12 : DateTime & TimeRange limit
         | 13 : DateTime & View limit
@@ -280,7 +280,7 @@ def get_vfm_data(data, match_code, **p):
                     result_dict['repl_dict'].update({post['i']: post['m']})
 
             case 1:
-                if (post['s'] < p['datetime_end'] and post['s'] > p['datetime_start']):  # DateTime limit
+                if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start']):  # DateTime limit
                     result_dict['cont'].append(counter)
                     result_dict['view'].append(post['v'])
                     result_dict['forw'].append(post['f'])
@@ -294,7 +294,7 @@ def get_vfm_data(data, match_code, **p):
 
             case 3:
                 if (post['w'] == 0):
-                    if (post['v'] < p['max_view'] and post['v'] > p['min_view']):
+                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']): # View limit
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
                         result_dict['forw'].append(post['f'])
@@ -305,7 +305,7 @@ def get_vfm_data(data, match_code, **p):
 
             case 4:
                 if (post['w'] == 0):
-                    if (post['f'] < p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
+                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
                         result_dict['forw'].append(post['f'])
@@ -316,7 +316,18 @@ def get_vfm_data(data, match_code, **p):
 
             case 5:
                 if (post['w'] == 0):
-                    if (post['m'] < p['max_mention'] and post['m'] > p['min_mention']):  # Mention limit
+                    if (post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # Mention limit
+                        result_dict['cont'].append(counter)
+                        result_dict['view'].append(post['v'])
+                        result_dict['forw'].append(post['f'])
+                        result_dict['repl'].append(post['m'])
+                        result_dict['view_dict'].update({post['i']: post['v']})
+                        result_dict['forw_dict'].update({post['i']: post['f']})
+                        result_dict['repl_dict'].update({post['i']: post['m']})
+
+            case 6:
+                if (post['w'] == 0):
+                    if (post['i'] <= p['max_id'] and post['m'] > p['min_id']):  # ID limit
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
                         result_dict['forw'].append(post['f'])
