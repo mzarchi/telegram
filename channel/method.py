@@ -1,4 +1,3 @@
-import appconfig as ac
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
 from datetime import datetime
@@ -10,6 +9,7 @@ import os
 
 import sys
 sys.path.append('../config')
+import appconfig as ac
 
 
 def fe(name):
@@ -78,11 +78,11 @@ def rjf(username):
 
 
 def ts(dati):
-    return int(time.mktime(datetime.datetime.strptime(dati, "%Y-%m-%d %H:%M").timetuple()))
+    return int(time.mktime(datetime.strptime(dati, "%Y-%m-%d %H:%M").timetuple()))
 
 
 def hm(hmvalue):
-    return int(time.mktime(datetime.datetime.strptime(hmvalue, "%H:%M").timetuple()))
+    return int(time.mktime(datetime.strptime(hmvalue, "%H:%M").timetuple()))
 
 
 def cttdt(ts, rs=True):
