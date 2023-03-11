@@ -243,8 +243,8 @@ def get_vfm_data(data, match_code, **p):
         | 24 : TimeRange & Forward limit
         | 25 : TimeRange & Mention limit
         | 34 : View & Forward limit *
-        | 35 : View & Mention limit
-        | 45 : Forward & Mention limit
+        | 35 : View & Mention limit *
+        | 45 : Forward & Mention limit *
         | 123 : DateTime & TimeRange & View limit
         | 124 : DateTime & TimeRange & Forward limit
         | 125 : DateTime & TimeRange & Mention limit
@@ -384,6 +384,18 @@ def get_vfm_data(data, match_code, **p):
             case 35:
                 if (post['w'] == 0):
                     if (post['v'] <= p['max_view'] and post['v'] > p['min_view'] and
+                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # View and forward limit
+                        result_dict['cont'].append(counter)
+                        result_dict['view'].append(post['v'])
+                        result_dict['forw'].append(post['f'])
+                        result_dict['repl'].append(post['m'])
+                        result_dict['view_dict'].update({post['i']: post['v']})
+                        result_dict['forw_dict'].update({post['i']: post['f']})
+                        result_dict['repl_dict'].update({post['i']: post['m']})
+
+            case 45:
+                if (post['w'] == 0):
+                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward'] and
                             post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # View and forward limit
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
