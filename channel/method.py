@@ -1,3 +1,4 @@
+import appconfig as ac
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
 from datetime import datetime
@@ -9,7 +10,6 @@ import os
 
 import sys
 sys.path.append('../config')
-import appconfig as ac
 
 
 def fe(name):
@@ -236,7 +236,7 @@ def get_vfm_data(data, match_code, **p):
         | 6 : ID limit *
         | 7 : is Forward
         | 12 : DateTime & TimeRange limit
-        | 13 : DateTime & View limit
+        | 13 : DateTime & View limit *
         | 14 : DateTime & Forward limit
         | 15 : DateTime & Mention limit
         | 23 : TimeRange & View limit
@@ -289,12 +289,9 @@ def get_vfm_data(data, match_code, **p):
                     result_dict['forw_dict'].update({post['i']: post['f']})
                     result_dict['repl_dict'].update({post['i']: post['m']})
 
-            case 2:
-                pass
-
             case 3:
                 if (post['w'] == 0):
-                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']): # View limit
+                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']):  # View limit
                         result_dict['cont'].append(counter)
                         result_dict['view'].append(post['v'])
                         result_dict['forw'].append(post['f'])
@@ -336,5 +333,19 @@ def get_vfm_data(data, match_code, **p):
                         result_dict['forw_dict'].update({post['i']: post['f']})
                         result_dict['repl_dict'].update({post['i']: post['m']})
 
+            case 13:
+                if (post['w'] == 0):
+                    if (
+                        post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
+                        post['v'] <= p['max_view'] and post['v'] > p['min_view']
+                    ):  # DateTime and view limit
+                        result_dict['cont'].append(counter)
+                        result_dict['view'].append(post['v'])
+                        result_dict['forw'].append(post['f'])
+                        result_dict['repl'].append(post['m'])
+                        result_dict['view_dict'].update({post['i']: post['v']})
+                        result_dict['forw_dict'].update({post['i']: post['f']})
+                        result_dict['repl_dict'].update({post['i']: post['m']})
+                        
         counter += 1
     return result_dict
