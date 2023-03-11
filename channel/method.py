@@ -1,4 +1,3 @@
-import appconfig as ac
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
 from datetime import datetime
@@ -10,6 +9,7 @@ import os
 
 import sys
 sys.path.append('../config')
+import appconfig as ac
 
 
 def fe(name):
@@ -268,142 +268,81 @@ def get_vfm_data(data, match_code, **p):
     }
 
     for post in data:
+        append_gate = False
         match match_code:
-            case 0:
-                if (post['w'] == 0):  # No limit
-                    result_dict['cont'].append(counter)
-                    result_dict['view'].append(post['v'])
-                    result_dict['forw'].append(post['f'])
-                    result_dict['repl'].append(post['m'])
-                    result_dict['view_dict'].update({post['i']: post['v']})
-                    result_dict['forw_dict'].update({post['i']: post['f']})
-                    result_dict['repl_dict'].update({post['i']: post['m']})
-
-            case 1:
-                if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start']):  # DateTime limit
-                    result_dict['cont'].append(counter)
-                    result_dict['view'].append(post['v'])
-                    result_dict['forw'].append(post['f'])
-                    result_dict['repl'].append(post['m'])
-                    result_dict['view_dict'].update({post['i']: post['v']})
-                    result_dict['forw_dict'].update({post['i']: post['f']})
-                    result_dict['repl_dict'].update({post['i']: post['m']})
-
-            case 3:
+            case 0:  # No limit
                 if (post['w'] == 0):
-                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']):  # View limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                    append_gate = True
 
-            case 4:
+            case 1:  # DateTime limit
                 if (post['w'] == 0):
-                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):  # Forward limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                    if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start']):
+                        append_gate = True
 
-            case 5:
+            case 3:  # View limit
                 if (post['w'] == 0):
-                    if (post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # Mention limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']):
+                        append_gate = True
 
-            case 6:
+            case 4:  # Forward limit
                 if (post['w'] == 0):
-                    if (post['i'] <= p['max_id'] and post['m'] > p['min_id']):  # ID limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                        append_gate = True
 
-            case 13:
+            case 5:  # Mention limit
+                if (post['w'] == 0):
+                    if (post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                        append_gate = True
+
+            case 6:  # ID limit
+                if (post['w'] == 0):
+                    if (post['i'] <= p['max_id'] and post['i'] > p['min_id']):
+                        append_gate = True
+
+            case 13:  # DateTime and View limit
                 if (post['w'] == 0):
                     if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['v'] <= p['max_view'] and post['v'] > p['min_view']):  # DateTime and view limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['v'] <= p['max_view'] and post['v'] > p['min_view']):
+                        append_gate = True
 
-            case 14:
+            case 14:  # DateTime and Forward limit
                 if (post['w'] == 0):
                     if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):  # DateTime and forward limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                        append_gate = True
 
-            case 15:
+            case 15:  # DateTime and Mention limit
                 if (post['w'] == 0):
                     if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # DateTime and mention limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                        append_gate = True
 
-            case 34:
+            case 34:  # View and Forward limit
                 if (post['w'] == 0):
                     if (post['v'] <= p['max_view'] and post['v'] > p['min_view'] and
-                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):  # View and forward limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                        append_gate = True
 
-            case 35:
+            case 35:  # View and Mention limit
                 if (post['w'] == 0):
                     if (post['v'] <= p['max_view'] and post['v'] > p['min_view'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # View and forward limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                        append_gate = True
 
-            case 45:
+            case 45:  # View and Forward limit
                 if (post['w'] == 0):
                     if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):  # View and forward limit
-                        result_dict['cont'].append(counter)
-                        result_dict['view'].append(post['v'])
-                        result_dict['forw'].append(post['f'])
-                        result_dict['repl'].append(post['m'])
-                        result_dict['view_dict'].update({post['i']: post['v']})
-                        result_dict['forw_dict'].update({post['i']: post['f']})
-                        result_dict['repl_dict'].update({post['i']: post['m']})
+                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                        append_gate = True
+
+        if append_gate:
+            result_dict['cont'].append(counter)
+            result_dict['view'].append(post['v'])
+            result_dict['forw'].append(post['f'])
+            result_dict['repl'].append(post['m'])
+            result_dict['view_dict'].update({post['i']: post['v']})
+            result_dict['forw_dict'].update({post['i']: post['f']})
+            result_dict['repl_dict'].update({post['i']: post['m']})
 
         counter += 1
     return result_dict
