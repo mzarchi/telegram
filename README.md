@@ -16,20 +16,35 @@
 6. Open ```/channel/analysis.ipynb``` and run first cell
 
 ## Supported params in ```/channel/analysis.ipynb```
+The most important cell in this notebook is this:
+```
+match_case = 6  # Important param
+dics = md.get_vfm_data(
+    data, match_case,
+    min_id=0, max_id=1000,
+    min_view=0, max_view=0,
+    min_forward=0, max_forward=0,
+    min_mention=0, max_mention=0,
+    datetime_start=md.ts("2010-01-18 00:00"), datetime_end=md.ts("2010-01-18 00:00"),
+)
 
-| 0 : No limit<br>
-| 1 : DateTime limit<br>
-| 3 : View limit<br>
-| 4 : Forward limit<br>
-| 5 : Mention limit<br>
-| 6 : ID limit<br>
-| 13 : DateTime & View limit<br>
-| 14 : DateTime & Forward limit<br>
-| 15 : DateTime & Mention limit<br>
-| 34 : View & Forward limit<br>
-| 35 : View & Mention limit<br>
-| 45 : Forward & Mention limit<br>
-
+``` 
+According to the following ```match_case```:
+```
+| 0 : No limit
+| 1 : DateTime limit
+| 3 : View limit
+| 4 : Forward limit
+| 5 : Mention limit
+| 6 : ID limit
+| 13 : DateTime & View limit
+| 14 : DateTime & Forward limit
+| 15 : DateTime & Mention limit
+| 34 : View & Forward limit
+| 35 : View & Mention limit
+| 45 : Forward & Mention limit
+```
+You can get the data you want in an edited form!
 <p align="center">
 <img src="./assets/images/plot-1.jpg" width="500" height="500">
 </p>
