@@ -5,7 +5,6 @@
 
 2. Install **Telethon** by ```pip install Telethon
 
-```
 
 3. Use ```git clone https://github.com/mzarchi/telegram.git```
 
@@ -13,8 +12,6 @@
     > <sub>At this step, you must have **api_id** and **api_hash**</sub>
 
 5. Login to your **Telegram** account by `` `/login/main.py` ` ` and save your **automatically** your session in ` ``/sessions
-
-```
 
 6. Open ```/channel/analysis.ipynb``` and run first cell
 
