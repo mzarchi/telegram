@@ -76,5 +76,5 @@ fig = plt.gcf()
 fig.set_size_inches(18.5, 10.5)
 ```
 <p align="center">
-<img src="./assets/images/chart-forward.png.png" width="925" height="600">
+<img src="./assets/images/chart-forward.png" width="925" height="600">
 </p>
