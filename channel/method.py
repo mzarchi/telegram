@@ -376,3 +376,5 @@ def drv(data):
         rte_dict[day_andis] += ((p['v'] * view_rate) +
                                 (p['f'] * forw_rate) + (p['m'] * ment_rate)) / 1000
         viw_dict[day_andis].append(p['v'])
+    
+    return day_dict, rte_dict, viw_dict
