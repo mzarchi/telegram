@@ -346,3 +346,33 @@ def get_vfm_data(data, match_code, **p):
 
         counter += 1
     return result_dict
+
+
+def drv(data):
+    view_rate = 1
+    forw_rate = 4
+    ment_rate = 2
+
+    day_dict = {}
+    rte_dict = {}
+    viw_dict = {}
+    for i in range(0, 96):
+        day_dict.update({i: 0})
+        rte_dict.update({i: 0})
+        viw_dict.update({i: []})
+
+    for p in data:
+        day_position = p['s'] % 86400
+        day_andis = 0
+        if day_position % 900 == 0:
+            day_andis = day_position // 900
+        else:
+            day_andis = (day_position // 900) + 1
+
+        if day_andis == 96:
+            day_andis = 0
+
+        day_dict[day_andis] += 1
+        rte_dict[day_andis] += ((p['v'] * view_rate) +
+                                (p['f'] * forw_rate) + (p['m'] * ment_rate)) / 1000
+        viw_dict[day_andis].append(p['v'])
