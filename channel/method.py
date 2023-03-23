@@ -1,9 +1,7 @@
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
-from datetime import datetime
+from Module import Time as ti
 from os.path import exists
-from time import sleep
-import time
 import json
 import os
 
@@ -16,8 +14,8 @@ def fe(name):
     file_exists = exists(f"ChannelData/{name}.json")
     if file_exists is True:
         data = rjf(name)
-        start_post = cttdt(data[0]['s'])
-        end_post = cttdt(data[-1]['s'])
+        start_post = ti.convert_timestamp(data[0]['s'])
+        end_post = ti.convert_timestamp(data[-1]['s'])
         dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
         channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
         post_counts = '{:,}'.format(len(data)) + ' posts'
@@ -60,7 +58,7 @@ async def get_data(username, count):
 
     data.reverse()
     print(f"\nData size: {len(data)}")
-    time.sleep(1)
+    ti.sleep(1)
     wjf(username, data)
     return data
 
@@ -77,34 +75,6 @@ def rjf(username):
     return json.loads(f.read())
 
 
-def ts(dati):
-    return int(time.mktime(datetime.strptime(dati, "%Y-%m-%d %H:%M").timetuple()))
-
-
-def hm(hmvalue):
-    return int(time.mktime(datetime.strptime(hmvalue, "%H:%M").timetuple()))
-
-
-def cttdt(ts, rs=True):
-    dt = datetime.fromtimestamp(ts)
-    month = ""
-    if dt.month < 10:
-        month = f"0{dt.month}"
-    else:
-        month = dt.month
-
-    day = ""
-    if dt.day < 10:
-        day = f"0{dt.day}"
-    else:
-        day = dt.day
-
-    if rs:
-        return "{}.{}.{}".format(dt.year, month, day)
-    else:
-        return "{}{}{}".format(dt.year, month, day)
-
-
 def ShowChannelList():
     fv = ""
     path = 'ChannelData/'
@@ -118,47 +88,15 @@ def ShowChannelList():
             fv = "kB"
 
         data = rjf(d.replace('.json', ''))
-        start_post = cttdt(data[0]['s'])
-        end_post = cttdt(data[-1]['s'])
+        start_post = ti.convert_timestamp(data[0]['s'])
+        end_post = ti.convert_timestamp(data[-1]['s'])
         dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
         channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
         post_counts = '{:,}'.format(len(data)) + ' posts,'
         value = '{:,}'.format(round(size, 2)) + f" {fv} )"
         print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
             i+1, dates, channel_name, post_counts, value))
-        sleep(0.3)
-
-
-def convert_ts_to_point(timestamp):
-    dt = datetime.fromtimestamp(timestamp)
-    xy = dt.year - 2013
-    match dt.day:
-        case 1 | 7 | 13 | 19 | 25:
-            xy += 0.16
-        case 2 | 8 | 14 | 20 | 26:
-            xy += 0.29
-        case 3 | 9 | 15 | 21 | 27:
-            xy += 0.46
-        case 4 | 10 | 16 | 22 | 28:
-            xy += 0.59
-        case 5 | 11 | 17 | 23 | 29:
-            xy += 0.72
-        case 6 | 12 | 18 | 24 | 30 | 31:
-            xy += 0.85
-
-    ym = dt.month - 1
-    if dt.day >= 1 and dt.day <= 6:
-        ym += 0.18
-    elif dt.day > 6 and dt.day <= 12:
-        ym += 0.34
-    elif dt.day > 12 and dt.day <= 18:
-        ym += 0.50
-    elif dt.day > 18 and dt.day <= 24:
-        ym += 0.66
-    elif dt.day > 24 and dt.day <= 31:
-        ym += 0.82
-
-    return xy, ym
+        ti.sleep(0.3)
 
 
 def scatter_handel(data):
@@ -180,14 +118,14 @@ def scatter_handel(data):
     }
 
     for p in data:
-        dt = datetime.fromtimestamp(p['s'])
-        dname = cttdt(p['s'])
+        dt = ti.fromtimestamp(p['s'])
+        dname = ti.convert_timestamp(p['s'])
         if dname in sd:
             sd[dname] += 1
         else:
             sd[dname] = 1
 
-    today = convert_ts_to_point(int(time.time()))
+    today = ti.points(int(ti.time()))
     unit_value = max(sd.values()) / 3
     uv2 = unit_value * 2
     uv3 = unit_value * 3
@@ -195,9 +133,9 @@ def scatter_handel(data):
     try:
         for i, p in enumerate(data):
             distance_ts.append(data[i+1]['s'] - data[i]['s'])
-            xy, ym = convert_ts_to_point(p['s'])
-            dname = cttdt(p['s'])
-            dsv = cttdt(p['s'], False)
+            xy, ym = ti.points(p['s'])
+            dname = ti.convert_timestamp(p['s'])
+            dsv = ti.convert_timestamp(p['s'], False)
             if not dsv in ds:
                 ds.append(dsv)
                 if sd[dname] >= 1 and sd[dname] < uv2:
@@ -376,5 +314,5 @@ def drv(data):
         rte_dict[day_andis] += ((p['v'] * view_rate) +
                                 (p['f'] * forw_rate) + (p['m'] * ment_rate)) / 1000
         viw_dict[day_andis].append(p['v'])
-    
+
     return day_dict, rte_dict, viw_dict
