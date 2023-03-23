@@ -1,26 +1,22 @@
 from telethon.sync import TelegramClient
 from colorama import Fore, Style
-from Module import Time as ti
+from Module import Time, File, Config
 from os.path import exists
 import json
 import os
-
-import sys
-sys.path.append('../config')
-import appconfig as ac
 
 
 def fe(name):
     file_exists = exists(f"ChannelData/{name}.json")
     if file_exists is True:
-        data = rjf(name)
-        start_post = ti.convert_timestamp(data[0]['s'])
-        end_post = ti.convert_timestamp(data[-1]['s'])
+        data = File.read(name)
+        start_post = Time.convert_timestamp(data[0]['s'])
+        end_post = Time.convert_timestamp(data[-1]['s'])
         dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
         channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
         post_counts = '{:,}'.format(len(data)) + ' posts'
         print("{} {} ({})".format(dates, channel_name, post_counts))
-        return rjf(name)
+        return File.read(name)
     else:
         print("App does not have any json file!")
         print("Use below cell to get channel data ..")
@@ -28,7 +24,8 @@ def fe(name):
 
 async def get_data(username, count):
     data = []
-    async with TelegramClient('../sessions/my', ac.api_id, ac.api_hash) as client:
+    cf = Config()
+    async with TelegramClient('../sessions/my', cf.id, cf.hash) as client:
         print("Start streaming ...")
         for item in await client.get_messages(username, limit=count):
             if item.views is not None:
@@ -58,19 +55,19 @@ async def get_data(username, count):
 
     data.reverse()
     print(f"\nData size: {len(data)}")
-    ti.sleep(1)
-    wjf(username, data)
+    Time.sleep(1)
+    File.write(username, data)
     return data
 
 
-def wjf(username, data):
+def wjfA(username, data):
     txt = json.dumps(data)
     f = open(f"ChannelData/{username}.json", "a")
     f.write(txt)
     f.close()
 
 
-def rjf(username):
+def rjfA(username):
     f = open(f"ChannelData/{username}.json", "r")
     return json.loads(f.read())
 
@@ -87,16 +84,16 @@ def ShowChannelList():
         else:
             fv = "kB"
 
-        data = rjf(d.replace('.json', ''))
-        start_post = ti.convert_timestamp(data[0]['s'])
-        end_post = ti.convert_timestamp(data[-1]['s'])
+        data = File.read(d.replace('.json', ''))
+        start_post = Time.convert_timestamp(data[0]['s'])
+        end_post = Time.convert_timestamp(data[-1]['s'])
         dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
         channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
         post_counts = '{:,}'.format(len(data)) + ' posts,'
         value = '{:,}'.format(round(size, 2)) + f" {fv} )"
         print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
             i+1, dates, channel_name, post_counts, value))
-        ti.sleep(0.3)
+        Time.sleep(0.3)
 
 
 def scatter_handel(data):
@@ -118,14 +115,14 @@ def scatter_handel(data):
     }
 
     for p in data:
-        dt = ti.fromtimestamp(p['s'])
-        dname = ti.convert_timestamp(p['s'])
+        dt = Time.fromtimestamp(p['s'])
+        dname = Time.convert_timestamp(p['s'])
         if dname in sd:
             sd[dname] += 1
         else:
             sd[dname] = 1
 
-    today = ti.points(int(ti.time()))
+    today = Time.points(int(Time.time()))
     unit_value = max(sd.values()) / 3
     uv2 = unit_value * 2
     uv3 = unit_value * 3
@@ -133,9 +130,9 @@ def scatter_handel(data):
     try:
         for i, p in enumerate(data):
             distance_ts.append(data[i+1]['s'] - data[i]['s'])
-            xy, ym = ti.points(p['s'])
-            dname = ti.convert_timestamp(p['s'])
-            dsv = ti.convert_timestamp(p['s'], False)
+            xy, ym = Time.points(p['s'])
+            dname = Time.convert_timestamp(p['s'])
+            dsv = Time.convert_timestamp(p['s'], False)
             if not dsv in ds:
                 ds.append(dsv)
                 if sd[dname] >= 1 and sd[dname] < uv2:
