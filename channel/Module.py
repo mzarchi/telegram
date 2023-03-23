@@ -1,5 +1,7 @@
 from datetime import datetime
 import time
+import json
+import sys
 
 
 class Time:
@@ -74,3 +76,28 @@ class Time:
             ym += 0.82
 
         return xy, ym
+
+
+class File:
+    @classmethod
+    def write(cls, username, data):
+        txt = json.dumps(data)
+        f = open(f"ChannelData/{username}.json", "a")
+        f.write(txt)
+        f.close()
+
+    @classmethod
+    def read(cls, username):
+        f = open(f"ChannelData/{username}.json", "r")
+        return json.loads(f.read())
+
+
+class Config:
+    id = 0
+    hash = ''
+
+    def __init__(self):
+        sys.path.append(sys.path[0].replace('/channel', '/config'))
+        import appconfig as ac
+        self.id = ac.api_id
+        self.hash = ac.api_hash
