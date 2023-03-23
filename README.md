@@ -11,14 +11,15 @@
 4. Rename ```/config/appconfig_ignore.py``` to ```/config/appconfig.py``` and put your **_api_id_** and **_api_hash_**
     > <sub>At this step, you must have **api_id** and **api_hash**</sub>
 
-5. Login to your **Telegram** account by `` `/login/main.py` ` ` and save your **automatically** your session in ` ``/sessions
+5. Login to your **Telegram** account by ```/login/main.py``` and save your **automatically** your session in ```/sessions```
 
 6. Open ```/channel/analysis.ipynb``` and run first cell
 
 ## Supported params in ```/channel/analysis.ipynb```
 The most important cell in this notebook is this:
 
-```match_case = 6  # Important param
+```
+match_case = 6  # Important param
 dics = md.get_vfm_data(
     data, match_case,
     min_id=0, max_id=1000,
