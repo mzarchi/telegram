@@ -60,18 +60,6 @@ async def get_data(username, count):
     return data
 
 
-def wjfA(username, data):
-    txt = json.dumps(data)
-    f = open(f"ChannelData/{username}.json", "a")
-    f.write(txt)
-    f.close()
-
-
-def rjfA(username):
-    f = open(f"ChannelData/{username}.json", "r")
-    return json.loads(f.read())
-
-
 def ShowChannelList():
     fv = ""
     path = 'ChannelData/'
