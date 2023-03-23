@@ -3,7 +3,7 @@
 ***Steps:***
 1. Go to [Telegram Apps](https://my.telegram.org/auth?to=apps) to get **_api_id_** and **_api_hash_**
 
-2. Install **Telethon** by ```pip install Telethon
+2. Install **Telethon** by ```pip install Telethon```
 
 
 3. Use ```git clone https://github.com/mzarchi/telegram.git```
@@ -17,18 +17,19 @@
 
 ## Supported params in ```/channel/analysis.ipynb```
 The most important cell in this notebook is this:
-```
-match_case = 6  # Important param
+
+```match_case = 6  # Important param
 dics = md.get_vfm_data(
     data, match_case,
     min_id=0, max_id=1000,
     min_view=0, max_view=0,
     min_forward=0, max_forward=0,
     min_mention=0, max_mention=0,
-    datetime_start=md.ts("2010-01-18 00:00"), datetime_end=md.ts("2010-01-18 00:00"),
+    datetime_start=md.ts("2010-01-18 00:00"),
+    datetime_end=md.ts("2010-01-18 00:00"),
 )
+```
 
-``` 
 According to the following ```match_case```:
 ```
 | 0 : No limit
