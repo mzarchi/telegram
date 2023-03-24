@@ -1,7 +1,10 @@
+from colorama import Fore, Style
 from datetime import datetime
+from os.path import exists
 import time
 import json
 import sys
+import os
 
 
 class Time:
@@ -90,6 +93,46 @@ class File:
     def read(cls, username):
         f = open(f"ChannelData/{username}.json", "r")
         return json.loads(f.read())
+
+    @classmethod
+    def show(cls):
+        fv = ""
+        path = 'ChannelData/'
+        dirs = os.listdir(path)
+        for i, d in enumerate(dirs):
+            size = os.path.getsize(path + d) / 1024
+            if size > 100:
+                size = size / 1024
+                fv = "MB"
+            else:
+                fv = "kB"
+
+            data = File.read(d.replace('.json', ''))
+            start_post = Time.convert_timestamp(data[0]['s'])
+            end_post = Time.convert_timestamp(data[-1]['s'])
+            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
+            channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
+            post_counts = '{:,}'.format(len(data)) + ' posts,'
+            value = '{:,}'.format(round(size, 2)) + f" {fv} )"
+            print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
+                i+1, dates, channel_name, post_counts, value))
+            Time.sleep(0.3)
+
+    @classmethod
+    def get(cls, name):
+        file_exists = exists(f"ChannelData/{name}.json")
+        if file_exists is True:
+            data = File.read(name)
+            start_post = Time.convert_timestamp(data[0]['s'])
+            end_post = Time.convert_timestamp(data[-1]['s'])
+            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
+            channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
+            post_counts = '{:,}'.format(len(data)) + ' posts'
+            print("{} {} ({})".format(dates, channel_name, post_counts))
+            return File.read(name)
+        else:
+            print("App does not have any json file!")
+            print("Use below cell to get channel data ..")
 
 
 class Config:
