@@ -99,13 +99,18 @@ class File:
         fv = ""
         path = 'ChannelData/'
         dirs = os.listdir(path)
+        if ".ipynb_checkpoints" in dirs:
+            dirs.remove(".ipynb_checkpoints")
+
+        dirs = sorted(dirs, key=str.casefold)
         for i, d in enumerate(dirs):
-            size = os.path.getsize(path + d) / 1024
-            if size > 100:
-                size = size / 1024
-                fv = "MB"
-            else:
-                fv = "kB"
+            if d != ".ipynb_checkpoints.json":
+                size = os.path.getsize(path + d) / 1024
+                if size > 100:
+                    size = size / 1024
+                    fv = "MB"
+                else:
+                    fv = "kB"
 
             data = File.read(d.replace('.json', ''))
             start_post = Time.convert_timestamp(data[0]['s'])
@@ -115,8 +120,8 @@ class File:
             post_counts = '{:,}'.format(len(data)) + ' posts,'
             value = '{:,}'.format(round(size, 2)) + f" {fv} )"
             print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
-                i+1, dates, channel_name, post_counts, value))
-            Time.sleep(0.3)
+                cls.__setnum(i+1), dates, channel_name, post_counts, value))
+            Time.sleep(0.2)
 
     @classmethod
     def get(cls, name):
@@ -134,11 +139,16 @@ class File:
             print("App does not have any json file!")
             print("Use below cell to get channel data ..")
 
+    def __setnum(number):
+        if number >= 1 and number < 10:
+            return f"00{number}"
+        elif number >= 10 and number < 100:
+            return f"0{number}"
+        elif number >= 100:
+            return f"{number}"
+
 
 class Config:
-    id = 0
-    hash = ''
-
     def __init__(self):
         sys.path.append(sys.path[0].replace('/channel', '/config'))
         import appconfig as ac
