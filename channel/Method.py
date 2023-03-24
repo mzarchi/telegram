@@ -2,7 +2,7 @@ from telethon.sync import TelegramClient
 from Module import Time, File, Config
 
 
-async def get_data(username, count):
+async def get(username, count):
     data = []
     cf = Config()
     async with TelegramClient('../sessions/my', cf.id, cf.hash) as client:
@@ -44,19 +44,8 @@ def scatter_handel(data):
     sd = {}
     ds = []
     distance_ts = []
-    xp = {
-        'g1': [],
-        'g2': [],
-        'g3': [],
-        'g4': []
-    }
-
-    yp = {
-        'g1': [],
-        'g2': [],
-        'g3': [],
-        'g4': []
-    }
+    xp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
+    yp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
 
     for p in data:
         dt = Time.fromtimestamp(p['s'])
@@ -95,7 +84,8 @@ def scatter_handel(data):
     return xp, yp, today, distance_ts
 
 
-def show_day_distance(distance, day_count):
+def pdistance(distance, day_count):
+    # Show post time distanced from before post
     distance.sort(reverse=True)
     print("Big distance from two post (day):")
     for i, d in enumerate(distance):
@@ -104,7 +94,7 @@ def show_day_distance(distance, day_count):
         print("{} days".format(int(d / 86400)))
 
 
-def get_vfm_data(data, match_code, **p):
+def cdata(data, match_code, **p):
     """
         | 0 : No limit *
         | 1 : DateTime limit *
@@ -137,13 +127,8 @@ def get_vfm_data(data, match_code, **p):
 
     counter = 1
     result_dict = {
-        'cont': [],
-        'view': [],
-        'forw': [],
-        'repl': [],
-        'view_dict': {},
-        'forw_dict': {},
-        'repl_dict': {},
+        'cont': [], 'view': [], 'forw': [], 'repl': [],
+        'view_dict': {}, 'forw_dict': {}, 'repl_dict': {}
     }
 
     for post in data:
