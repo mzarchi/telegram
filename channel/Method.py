@@ -1,5 +1,6 @@
 from telethon.sync import TelegramClient
 from Module import Time, File, Config
+from pytz import timezone
 
 
 async def get(username, count):
@@ -19,13 +20,16 @@ async def get(username, count):
                     if (item.fwd_from != None):
                         frw = 1
 
+                    td = item.date.astimezone(timezone(cf.zone))
+                    tdstr = td.strftime("%Y, %m, %d, %H, %M, %S")
                     post_detais = {
-                        'i': item.id,
-                        's': int(item.date.timestamp()),
-                        'v': item.views,
-                        'f': item.forwards,
-                        'm': replies,
-                        'w': frw,
+                        'id': item.id,
+                        'view': item.views,
+                        'forward': item.forwards,
+                        'mention': replies,
+                        'datetime': tdstr.split(", "),
+                        'unixtime': int(item.date.timestamp()),
+                        'is_forward': frw
                     }
 
                     data.append(post_detais)
