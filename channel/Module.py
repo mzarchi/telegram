@@ -154,3 +154,4 @@ class Config:
         import appconfig as ac
         self.id = ac.api_id
         self.hash = ac.api_hash
+        self.zone = ac.timezone
