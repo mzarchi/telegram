@@ -27,32 +27,11 @@ class Time:
         return time.time()
 
     @classmethod
-    def convert_timestamp(cls, ts, rs=True):
-        # Convert timestamp to datetime
-        dt = cls.fromtimestamp(ts)
-        month = ""
-        if dt.month < 10:
-            month = f"0{dt.month}"
-        else:
-            month = dt.month
-
-        day = ""
-        if dt.day < 10:
-            day = f"0{dt.day}"
-        else:
-            day = dt.day
-
-        if rs:
-            return "{}.{}.{}".format(dt.year, month, day)
-        else:
-            return "{}{}{}".format(dt.year, month, day)
-
-    @classmethod
-    def points(cls, timestamp):
+    def points(cls, dt):
         # Convert timestamp to point
-        dt = cls.fromtimestamp(timestamp)
-        xy = dt.year - 2013
-        match dt.day:
+        # dt = [2023, 03, 25, 14, 37, 50]
+        xy = int(dt[0]) - 2013
+        match int(dt[2]):
             case 1 | 7 | 13 | 19 | 25:
                 xy += 0.16
             case 2 | 8 | 14 | 20 | 26:
@@ -66,19 +45,29 @@ class Time:
             case 6 | 12 | 18 | 24 | 30 | 31:
                 xy += 0.85
 
-        ym = dt.month - 1
-        if dt.day >= 1 and dt.day <= 6:
+        ym = int(dt[1]) - 1
+        day = int(dt[2])
+        if day >= 1 and day <= 6:
             ym += 0.18
-        elif dt.day > 6 and dt.day <= 12:
+        elif day > 6 and day <= 12:
             ym += 0.34
-        elif dt.day > 12 and dt.day <= 18:
+        elif day > 12 and day <= 18:
             ym += 0.50
-        elif dt.day > 18 and dt.day <= 24:
+        elif day > 18 and day <= 24:
             ym += 0.66
-        elif dt.day > 24 and dt.day <= 31:
+        elif day > 24 and day <= 31:
             ym += 0.82
 
         return xy, ym
+
+    @classmethod
+    def dtnow(cls):
+        return datetime.now()
+
+    @classmethod
+    def dtlist(cls, dtobj):
+        tdstr = dtobj.strftime("%Y, %m, %d, %H, %M, %S")
+        return tdstr.split(", ")
 
 
 class File:
@@ -113,8 +102,9 @@ class File:
                     fv = "kB"
 
             data = File.read(d.replace('.json', ''))
-            start_post = Time.convert_timestamp(data[0]['s'])
-            end_post = Time.convert_timestamp(data[-1]['s'])
+            print(data[0])
+            start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
+            end_post = f"{data[-1]['datetime'][0]}.{data[-1]['datetime'][1]}.{data[-1]['datetime'][2]}"
             dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
             channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
             post_counts = '{:,}'.format(len(data)) + ' posts,'
@@ -128,8 +118,8 @@ class File:
         file_exists = exists(f"ChannelData/{name}.json")
         if file_exists is True:
             data = File.read(name)
-            start_post = Time.convert_timestamp(data[0]['s'])
-            end_post = Time.convert_timestamp(data[-1]['s'])
+            start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
+            end_post = f"{data[-1]['datetime'][0]}.{data[-1]['datetime'][1]}.{data[-1]['datetime'][2]}"
             dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
             channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
             post_counts = '{:,}'.format(len(data)) + ' posts'
