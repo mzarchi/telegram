@@ -21,13 +21,12 @@ async def get(username, count):
                         frw = 1
 
                     td = item.date.astimezone(timezone(cf.zone))
-                    tdstr = td.strftime("%Y, %m, %d, %H, %M, %S")
                     post_detais = {
                         'id': item.id,
                         'view': item.views,
                         'forward': item.forwards,
                         'mention': replies,
-                        'datetime': tdstr.split(", "),
+                        'datetime': Time.dtlist(td),
                         'unixtime': int(item.date.timestamp()),
                         'is_forward': frw
                     }
@@ -52,24 +51,23 @@ def scatter_handel(data):
     yp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
 
     for p in data:
-        dt = Time.fromtimestamp(p['s'])
-        dname = Time.convert_timestamp(p['s'])
+        dname = f"{p['datetime'][0]}.{p['datetime'][1]}.{p['datetime'][2]}"
         if dname in sd:
             sd[dname] += 1
         else:
             sd[dname] = 1
 
-    today = Time.points(int(Time.time()))
+    today = Time.points(Time.dtlist(Time.dtnow()))
     unit_value = max(sd.values()) / 3
     uv2 = unit_value * 2
     uv3 = unit_value * 3
 
     try:
         for i, p in enumerate(data):
-            distance_ts.append(data[i+1]['s'] - data[i]['s'])
-            xy, ym = Time.points(p['s'])
-            dname = Time.convert_timestamp(p['s'])
-            dsv = Time.convert_timestamp(p['s'], False)
+            distance_ts.append(data[i+1]['unixtime'] - data[i]['unixtime'])
+            xy, ym = Time.points(p['datetime'])
+            dname = f"{p['datetime'][0]}.{p['datetime'][1]}.{p['datetime'][2]}"
+            dsv = f"{p['datetime'][0]}{p['datetime'][1]}{p['datetime'][2]}"
             if not dsv in ds:
                 ds.append(dsv)
                 if sd[dname] >= 1 and sd[dname] < uv2:
@@ -139,78 +137,78 @@ def cdata(data, match_code, **p):
         append_gate = False
         match match_code:
             case 0:  # No limit
-                if (post['w'] == 0):
+                if (post['is_forward'] == 0):
                     append_gate = True
 
             case 1:  # DateTime limit
-                if (post['w'] == 0):
-                    if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start']):
+                if (post['is_forward'] == 0):
+                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start']):
                         append_gate = True
 
             case 3:  # View limit
-                if (post['w'] == 0):
-                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view']):
+                if (post['is_forward'] == 0):
+                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view']):
                         append_gate = True
 
             case 4:  # Forward limit
-                if (post['w'] == 0):
-                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                if (post['is_forward'] == 0):
+                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
                         append_gate = True
 
             case 5:  # Mention limit
-                if (post['w'] == 0):
-                    if (post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                if (post['is_forward'] == 0):
+                    if (post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
             case 6:  # ID limit
-                if (post['w'] == 0):
-                    if (post['i'] <= p['max_id'] and post['i'] > p['min_id']):
+                if (post['is_forward'] == 0):
+                    if (post['id'] <= p['max_id'] and post['id'] > p['min_id']):
                         append_gate = True
 
             case 13:  # DateTime and View limit
-                if (post['w'] == 0):
-                    if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['v'] <= p['max_view'] and post['v'] > p['min_view']):
+                if (post['is_forward'] == 0):
+                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                            post['view'] <= p['max_view'] and post['view'] > p['min_view']):
                         append_gate = True
 
             case 14:  # DateTime and Forward limit
-                if (post['w'] == 0):
-                    if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                if (post['is_forward'] == 0):
+                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                            post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
                         append_gate = True
 
             case 15:  # DateTime and Mention limit
-                if (post['w'] == 0):
-                    if (post['s'] <= p['datetime_end'] and post['s'] > p['datetime_start'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                if (post['is_forward'] == 0):
+                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
             case 34:  # View and Forward limit
-                if (post['w'] == 0):
-                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view'] and
-                            post['f'] <= p['max_forward'] and post['f'] > p['min_forward']):
+                if (post['is_forward'] == 0):
+                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
+                            post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
                         append_gate = True
 
             case 35:  # View and Mention limit
-                if (post['w'] == 0):
-                    if (post['v'] <= p['max_view'] and post['v'] > p['min_view'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                if (post['is_forward'] == 0):
+                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
+                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
             case 45:  # View and Forward limit
-                if (post['w'] == 0):
-                    if (post['f'] <= p['max_forward'] and post['f'] > p['min_forward'] and
-                            post['m'] <= p['max_mention'] and post['m'] > p['min_mention']):
+                if (post['is_forward'] == 0):
+                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward'] and
+                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
         if append_gate:
             result_dict['cont'].append(counter)
-            result_dict['view'].append(post['v'])
-            result_dict['forw'].append(post['f'])
-            result_dict['repl'].append(post['m'])
-            result_dict['view_dict'].update({post['i']: post['v']})
-            result_dict['forw_dict'].update({post['i']: post['f']})
-            result_dict['repl_dict'].update({post['i']: post['m']})
+            result_dict['view'].append(post['view'])
+            result_dict['forw'].append(post['forward'])
+            result_dict['repl'].append(post['mention'])
+            result_dict['view_dict'].update({post['id']: post['view']})
+            result_dict['forw_dict'].update({post['id']: post['forward']})
+            result_dict['repl_dict'].update({post['id']: post['mention']})
 
         counter += 1
     return result_dict
@@ -230,7 +228,7 @@ def drv(data):
         viw_dict.update({i: []})
 
     for p in data:
-        day_position = p['s'] % 86400
+        day_position = p['unixtime'] % 86400
         day_andis = 0
         if day_position % 900 == 0:
             day_andis = day_position // 900
@@ -241,8 +239,8 @@ def drv(data):
             day_andis = 0
 
         day_dict[day_andis] += 1
-        rte_dict[day_andis] += ((p['v'] * view_rate) +
-                                (p['f'] * forw_rate) + (p['m'] * ment_rate)) / 1000
-        viw_dict[day_andis].append(p['v'])
+        rte_dict[day_andis] += ((p['view'] * view_rate) +
+                                (p['forward'] * forw_rate) + (p['mention'] * ment_rate)) / 1000
+        viw_dict[day_andis].append(p['view'])
 
     return day_dict, rte_dict, viw_dict
