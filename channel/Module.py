@@ -80,7 +80,7 @@ class File:
 
     @classmethod
     def read(cls, username):
-        f = open(f"ChannelData/{username}.json", "r")
+        f = open(f"ChannelData/{username}.json")
         return json.loads(f.read())
 
     @classmethod
