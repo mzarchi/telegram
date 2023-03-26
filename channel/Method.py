@@ -105,17 +105,20 @@ def cdata(data, match_code, **p):
         | 4 : Forward limit *
         | 5 : Mention limit *
         | 6 : ID limit *
-        | 7 : is Forward
         | 12 : DateTime & TimeRange limit
         | 13 : DateTime & View limit *
         | 14 : DateTime & Forward limit *
         | 15 : DateTime & Mention limit *
+        | 16 : DateTime & ID limit *
         | 23 : TimeRange & View limit
         | 24 : TimeRange & Forward limit
         | 25 : TimeRange & Mention limit
         | 34 : View & Forward limit *
         | 35 : View & Mention limit *
+        | 36 : View & ID limit *
         | 45 : Forward & Mention limit *
+        | 46 : Forward & ID limit *
+        | 56 : Mention & ID limit *
         | 123 : DateTime & TimeRange & View limit
         | 124 : DateTime & TimeRange & Forward limit
         | 125 : DateTime & TimeRange & Mention limit
@@ -183,6 +186,12 @@ def cdata(data, match_code, **p):
                             post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
+            case 16:  # DateTime and ID limit
+                if (post['is_forward'] == 0):
+                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                        append_gate = True
+
             case 34:  # View and Forward limit
                 if (post['is_forward'] == 0):
                     if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
@@ -195,10 +204,28 @@ def cdata(data, match_code, **p):
                             post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
-            case 45:  # View and Forward limit
+            case 36:  # View and ID limit
+                if (post['is_forward'] == 0):
+                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
+                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                        append_gate = True
+
+            case 45:  # Forward and Mention limit
                 if (post['is_forward'] == 0):
                     if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward'] and
                             post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
+                        append_gate = True
+
+            case 46:  # Forward and ID limit
+                if (post['is_forward'] == 0):
+                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward'] and
+                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                        append_gate = True
+
+            case 56:  # Mention and ID limit
+                if (post['is_forward'] == 0):
+                    if (post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention'] and
+                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
                         append_gate = True
 
         if append_gate:
