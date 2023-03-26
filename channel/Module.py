@@ -102,7 +102,6 @@ class File:
                     fv = "kB"
 
             data = File.read(d.replace('.json', ''))
-            print(data[0])
             start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
             end_post = f"{data[-1]['datetime'][0]}.{data[-1]['datetime'][1]}.{data[-1]['datetime'][2]}"
             dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
