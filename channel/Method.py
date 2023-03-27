@@ -131,6 +131,7 @@ def cdata(data, match_code, **p):
     """
 
     counter = 1
+    newdata = []
     result_dict = {
         'cont': [], 'view': [], 'forw': [], 'repl': [],
         'view_dict': {}, 'forw_dict': {}, 'repl_dict': {}
@@ -154,7 +155,7 @@ def cdata(data, match_code, **p):
                         p['start_time'], p['stop_time'])
                     pt = post['datetime']
                     post_time = int(f"{pt[3]}{pt[4]}{pt[5]}")
-                    if (post_time <= stop_time and post_time > start_time):
+                    if (post_time >= start_time and post_time <= stop_time):
                         append_gate = True
 
             case 3:  # View limit
@@ -238,6 +239,7 @@ def cdata(data, match_code, **p):
                         append_gate = True
 
         if append_gate:
+            newdata.append(post)
             result_dict['cont'].append(counter)
             result_dict['view'].append(post['view'])
             result_dict['forw'].append(post['forward'])
@@ -247,7 +249,7 @@ def cdata(data, match_code, **p):
             result_dict['repl_dict'].update({post['id']: post['mention']})
 
         counter += 1
-    return result_dict
+    return newdata, result_dict
 
 
 def drv(data):
