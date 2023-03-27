@@ -69,6 +69,13 @@ class Time:
         tdstr = dtobj.strftime("%Y, %m, %d, %H, %M, %S")
         return tdstr.split(", ")
 
+    @classmethod
+    def reformat_time(cls, first_time, second_time):
+        # Convert 20:08:54 to 200854
+        ft = first_time.replace(":", "")
+        st = second_time.replace(":", "")
+        return int(ft), int(st)
+
 
 class File:
     @classmethod
