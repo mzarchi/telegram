@@ -98,36 +98,36 @@ def pdistance(distance, day_count):
 
 def cdata(data, match_code, **p):
     """
-        | 0 : No limit *
-        | 1 : DateTime limit *
-        | 2 : TimeRange limit
-        | 3 : View limit *
-        | 4 : Forward limit *
-        | 5 : Mention limit *
-        | 6 : ID limit *
-        | 12 : DateTime & TimeRange limit
-        | 13 : DateTime & View limit *
-        | 14 : DateTime & Forward limit *
-        | 15 : DateTime & Mention limit *
-        | 16 : DateTime & ID limit *
-        | 23 : TimeRange & View limit
-        | 24 : TimeRange & Forward limit
-        | 25 : TimeRange & Mention limit
-        | 34 : View & Forward limit *
-        | 35 : View & Mention limit *
-        | 36 : View & ID limit *
-        | 45 : Forward & Mention limit *
-        | 46 : Forward & ID limit *
-        | 56 : Mention & ID limit *
-        | 123 : DateTime & TimeRange & View limit
-        | 124 : DateTime & TimeRange & Forward limit
-        | 125 : DateTime & TimeRange & Mention limit
-        | 234 : TimeRange & Favorite & Forward limit
-        | 235 : TimeRange & Favorite & Mention limit
-        | 345 : View & Forward & Mention limit
-        | 1234 : DateTime & TimeRange & View & Forward limit
-        | 1235 : DateTime & TimeRange & View & Mention limit
-        | 12345 : DateTime & TimeRange & View & Forward & Mention limit
+    0 : No limit *
+    1 : DateTime limit *
+    2 : TimeRange limit *
+    3 : View limit *
+    4 : Forward limit *
+    5 : Mention limit *
+    6 : ID limit *
+    12 : DateTime & TimeRange limit
+    13 : DateTime & View limit *
+    14 : DateTime & Forward limit *
+    15 : DateTime & Mention limit *
+    16 : DateTime & ID limit *
+    23 : TimeRange & View limit
+    24 : TimeRange & Forward limit
+    25 : TimeRange & Mention limit
+    34 : View & Forward limit *
+    35 : View & Mention limit *
+    36 : View & ID limit *
+    45 : Forward & Mention limit *
+    46 : Forward & ID limit *
+    56 : Mention & ID limit *
+    123 : DateTime & TimeRange & View limit
+    124 : DateTime & TimeRange & Forward limit
+    125 : DateTime & TimeRange & Mention limit
+    234 : TimeRange & Favorite & Forward limit
+    235 : TimeRange & Favorite & Mention limit
+    345 : View & Forward & Mention limit
+    1234 : DateTime & TimeRange & View & Forward limit
+    1235 : DateTime & TimeRange & View & Mention limit
+    12345 : DateTime & TimeRange & View & Forward & Mention limit
     """
 
     counter = 1
@@ -145,7 +145,16 @@ def cdata(data, match_code, **p):
 
             case 1:  # DateTime limit
                 if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start']):
+                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime']):
+                        append_gate = True
+
+            case 2:  # TimeRange limit
+                if (post['is_forward'] == 0):
+                    start_time, stop_time = Time.reformat_time(
+                        p['start_time'], p['stop_time'])
+                    pt = post['datetime']
+                    post_time = int(f"{pt[3]}{pt[4]}{pt[5]}")
+                    if (post_time <= stop_time and post_time > start_time):
                         append_gate = True
 
             case 3:  # View limit
@@ -170,25 +179,25 @@ def cdata(data, match_code, **p):
 
             case 13:  # DateTime and View limit
                 if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
                             post['view'] <= p['max_view'] and post['view'] > p['min_view']):
                         append_gate = True
 
             case 14:  # DateTime and Forward limit
                 if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
                             post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
                         append_gate = True
 
             case 15:  # DateTime and Mention limit
                 if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
                             post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
                         append_gate = True
 
             case 16:  # DateTime and ID limit
                 if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['datetime_end'] and post['unixtime'] > p['datetime_start'] and
+                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
                             post['id'] <= p['max_id'] and post['id'] > p['min_id']):
                         append_gate = True
 
