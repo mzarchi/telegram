@@ -1,11 +1,13 @@
+import appconfig as ac
 from telethon.sync import TelegramClient
+import socks
 
 import sys
 sys.path.append('./config')
-import appconfig as ac
 
 
-tclient = TelegramClient('../sessions/my', ac.api_id, ac.api_hash)
+tclient = TelegramClient('../sessions/my', ac.api_id,
+                         ac.api_hash, proxy=(socks.SOCKS5, '127.0.0.1', 2080))
 
 
 def get_comments(client, channel, message_id):
@@ -24,7 +26,7 @@ def get_comments(client, channel, message_id):
     return data
 
 
-post_link = "https://t.me/Arzoyman33/5369"
+post_link = "https://t.me/MohammadZarchi/111"
 cd = post_link.split('/')
 post_id = int(cd[4])
 user_ids = []
