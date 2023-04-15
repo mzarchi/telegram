@@ -43,6 +43,17 @@ async def get(username, count):
     return data
 
 
+async def get_src(username, count):
+    data = []
+    cf = Config()
+    async with TelegramClient('../sessions/my', cf.id, cf.hash) as client:
+        print("Start streaming ...")
+        for item in await client.get_messages(username, limit=count):
+            data.append(item)
+
+    return data
+
+
 def scatter_handel(data):
     sd = {}
     ds = []
