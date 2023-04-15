@@ -20,10 +20,15 @@ async def get(username, count):
                     if (item.fwd_from != None):
                         frw = 1
 
+                    post_author = "NoAuthor"
+                    if hasattr(item, "post_author"):
+                        post_author = item.post_author
+
                     td = item.date.astimezone(timezone(cf.zone))
                     post_detais = {
                         'id': item.id,
                         'view': item.views,
+                        'author': post_author,
                         'forward': item.forwards,
                         'mention': replies,
                         'datetime': Time.dtlist(td),
