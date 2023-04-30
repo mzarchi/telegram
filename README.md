@@ -53,36 +53,3 @@ According to the following ```match_case```:
 56 : Mention & ID limit *
 ```
 You can get the data you want in an edited form!
-
-## Some result of ```/channel/analysis.ipynb```
-- Channel posts View chart:
-```
-plt.plot(dics['cont'], dics['view'], label='View', linewidth=2)
-plt.title(
-    f'\nChannel posts View chart of @{username}\n', fontname="DejaVu Sans", size=32)
-plt.xlabel("\nNumber(id) of posts")
-plt.ylabel("Count of View")
-plt.legend()
-plt.grid(color='gray', linestyle='--', axis='both', linewidth=0.8)
-fig = plt.gcf()
-fig.set_size_inches(18.5, 10.5)
-```
-<p align="center">
-<img src="./assets/images/chart-view.png" width="925" height="600">
-</p>
-
-- Channel posts Forward chart:
-```
-plt.plot(dics['cont'], dics['forw'], 'r', label='Forward', linewidth=2)
-plt.title(
-    f'\nChannel posts Forward chart of @{username}\n', fontname="DejaVu Sans", size=32)
-plt.xlabel("\nNumber(id) of posts")
-plt.ylabel("Count of Forward")
-plt.legend()
-plt.grid(color='gray', linestyle='--', axis='both', linewidth=0.5)
-fig = plt.gcf()
-fig.set_size_inches(18.5, 10.5)
-```
-<p align="center">
-<img src="./assets/images/chart-forward.png" width="925" height="600">
-</p>
