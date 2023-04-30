@@ -5,15 +5,16 @@
 
 2. Install **Telethon** by ```pip install Telethon```
 
+3. Clone repo by ```git clone https://github.com/mzarchi/telegram.git```
 
-3. Use ```git clone https://github.com/mzarchi/telegram.git```
+4. Install lib by ```pip install -r requirements.txt```
 
-4. Rename ```/config/appconfig_ignore.py``` to ```/config/appconfig.py``` and put your **_api_id_** and **_api_hash_**
+5. Rename ```/config/appconfig_ignore.py``` to ```/config/appconfig.py``` and put your **_api_id_** and **_api_hash_**
     > <sub>At this step, you must have **api_id** and **api_hash**</sub>
 
-5. Login to your **Telegram** account by ```/login/main.py``` and save **automatically** your session in ```/sessions```
+6. Login to your **Telegram** account by ```/login/main.py``` and save **automatically** your session in ```/sessions```
 
-6. Open ```/channel/analysis.ipynb``` and run first cell
+7. Open ```/channel/analysis.ipynb``` and run first cell
 
 ## Supported params in ```/channel/analysis.ipynb```
 The most important cell in this notebook is this:
