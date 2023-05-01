@@ -1,6 +1,5 @@
 _*
 .*
-*.json
 *.txt
 !requirements.txt
 test*
