@@ -6,7 +6,7 @@ from pytz import timezone
 async def get(username, count):
     data = []
     cf = Config()
-    async with TelegramClient('../sessions/my', cf.id, cf.hash) as client:
+    async with TelegramClient('../sessions/testmy', cf.id, cf.hash) as client:
         print("Start streaming ...")
         for item in await client.get_messages(username, limit=count):
             if item.views is not None:
@@ -27,13 +27,13 @@ async def get(username, count):
                     td = item.date.astimezone(timezone(cf.zone))
                     post_detais = {
                         'id': item.id,
+                        'is_forward': frw,
                         'view': item.views,
+                        'mention': replies,
                         'author': post_author,
                         'forward': item.forwards,
-                        'mention': replies,
                         'datetime': Time.dtlist(td),
                         'unixtime': int(item.date.timestamp()),
-                        'is_forward': frw
                     }
 
                     data.append(post_detais)
@@ -43,8 +43,17 @@ async def get(username, count):
 
     data.reverse()
     print(f"\nData size: {len(data)}")
-    Time.sleep(1)
-    File.write(username, data)
+    field_name = [
+        'datetime',
+        'unixtime',
+        'id',
+        'is_forward',
+        'mention',
+        'view',
+        'forward',
+        'author',
+    ]
+    File.write(username, field_name, data)
     return data
 
 
