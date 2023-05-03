@@ -1,10 +1,12 @@
-from colorama import Fore, Style
-from datetime import datetime
-from os.path import exists
-import time
-import json
-import sys
 import os
+import sys
+import csv
+import time
+import pandas as pd
+
+from os.path import exists
+from datetime import datetime
+from colorama import Fore, Style
 
 
 class Time:
@@ -66,8 +68,9 @@ class Time:
 
     @classmethod
     def dtlist(cls, dtobj):
-        tdstr = dtobj.strftime("%Y, %m, %d, %H, %M, %S")
-        return tdstr.split(", ")
+        tdstr = dtobj.strftime("%Y-%m-%d %H:%M:%S")
+        # return tdstr.split(", ")
+        return tdstr
 
     @classmethod
     def reformat_time(cls, first_time, second_time):
@@ -79,20 +82,23 @@ class Time:
 
 class File:
     @classmethod
-    def write(cls, username, data):
-        txt = json.dumps(data)
-        f = open(f"ChannelData/{username}.json", "a")
-        f.write(txt)
-        f.close()
+    def write(cls, username, field_name, data):
+        with open(f'ChannelData/{username}.csv', 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=field_name)
+            writer.writeheader()
+            writer.writerows(data)
+
+        #txt = json.dumps(data)
+        #f = open(f"ChannelData/{username}.json", "a")
+        # f.write(txt)
+        # f.close()
 
     @classmethod
     def read(cls, username):
-        f = open(f"ChannelData/{username}.json")
-        return json.loads(f.read())
+        return pd.read_csv(f'ChannelData/{username}')
 
     @classmethod
     def show(cls):
-        fv = ""
         path = 'ChannelData/'
         dirs = os.listdir(path)
         if ".ipynb_checkpoints" in dirs:
@@ -108,20 +114,24 @@ class File:
                 else:
                     fv = "kB"
 
-            data = File.read(d.replace('.json', ''))
-            start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
-            end_post = f"{data[-1]['datetime'][0]}.{data[-1]['datetime'][1]}.{data[-1]['datetime'][2]}"
+            data = File.read(d)
+            start_datetime_str = data['datetime'].iloc[0]
+            end_datetime_str = data['datetime'].iloc[-1]
+            start_datetime = start_datetime_str.split(" ")
+            end_datetime = end_datetime_str.split(" ")
+            start_post = f"{start_datetime[0]}"
+            end_post = f"{end_datetime[0]}"
             dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
             channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
             post_counts = '{:,}'.format(len(data)) + ' posts,'
             value = '{:,}'.format(round(size, 2)) + f" {fv} )"
             print("{}:{} {:<40s} ( {:<15s} {:<10s} ".format(
                 cls.__setnum(i+1), dates, channel_name, post_counts, value))
-            Time.sleep(0.2)
+            time.sleep(0.2)
 
     @classmethod
     def get(cls, name):
-        file_exists = exists(f"ChannelData/{name}.json")
+        file_exists = exists(f"ChannelData/{name}.csv")
         if file_exists is True:
             data = File.read(name)
             start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
