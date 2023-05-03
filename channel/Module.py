@@ -31,7 +31,7 @@ class Time:
     @classmethod
     def points(cls, dt):
         # Convert timestamp to point
-        # dt = [2023, 03, 25, 14, 37, 50]
+        # dt = [2023, 03, 25]
         xy = int(dt[0]) - 2013
         match int(dt[2]):
             case 1 | 7 | 13 | 19 | 25:
