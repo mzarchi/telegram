@@ -79,23 +79,23 @@ def scatter_handel(data):
     yp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
 
     for p in data:
-        dname = f"{p['datetime'][0]}.{p['datetime'][1]}.{p['datetime'][2]}"
+        dname = p['date'].replace("-", ".")
         if dname in sd:
             sd[dname] += 1
         else:
             sd[dname] = 1
-
-    today = Time.points(Time.dtlist(Time.dtnow()))
+    dt = Time.dtlist(Time.dtnow())
+    today = Time.points(dt[0].split("-"))
     unit_value = max(sd.values()) / 3
     uv2 = unit_value * 2
     uv3 = unit_value * 3
 
     try:
-        for i, p in enumerate(data):
-            distance_ts.append(data[i+1]['unixtime'] - data[i]['unixtime'])
-            xy, ym = Time.points(p['datetime'])
-            dname = f"{p['datetime'][0]}.{p['datetime'][1]}.{p['datetime'][2]}"
-            dsv = f"{p['datetime'][0]}{p['datetime'][1]}{p['datetime'][2]}"
+        for p in data:
+            # distance_ts.append(data[i+1]['unixtime'] - data[i]['unixtime'])
+            xy, ym = Time.points(p['date'].split("-"))
+            dname = p['date'].replace("-", ".")
+            dsv = p['date'].replace("-", "")
             if not dsv in ds:
                 ds.append(dsv)
                 if sd[dname] >= 1 and sd[dname] < uv2:
@@ -107,11 +107,10 @@ def scatter_handel(data):
                 elif sd[dname] >= uv3:
                     xp['g1'].append(xy)
                     yp['g1'].append(ym)
-
     except:
         pass
 
-    return xp, yp, today, distance_ts
+    return xp, yp, today  # , distance_ts
 
 
 def pdistance(distance, day_count):
@@ -178,8 +177,7 @@ def cdata(data, match_code, **p):
 
         match match_code:
             case 0:  # No limit
-                if (pis_forward == 0):
-                    append_gate = True
+                append_gate = True
 
             case 1:  # DateTime limit
                 if (pis_forward == 0):
