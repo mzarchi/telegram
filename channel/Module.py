@@ -68,9 +68,10 @@ class Time:
 
     @classmethod
     def dtlist(cls, dtobj):
-        tdstr = dtobj.strftime("%Y-%m-%d %H:%M:%S")
-        # return tdstr.split(", ")
-        return tdstr
+        datetime_list = []
+        datetime_list.append(dtobj.strftime("%Y-%m-%d"))
+        datetime_list.append(dtobj.strftime("%H:%M:%S"))
+        return datetime_list
 
     @classmethod
     def reformat_time(cls, first_time, second_time):
@@ -115,13 +116,9 @@ class File:
                     fv = "kB"
 
             data = File.read(d)
-            start_datetime_str = data['datetime'].iloc[0]
-            end_datetime_str = data['datetime'].iloc[-1]
-            start_datetime = start_datetime_str.split(" ")
-            end_datetime = end_datetime_str.split(" ")
-            start_post = f"{start_datetime[0]}"
-            end_post = f"{end_datetime[0]}"
-            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
+            start_date = data['date'].iloc[0]
+            end_date = data['date'].iloc[-1]
+            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_date}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_date}{Style.RESET_ALL}]"
             channel_name = f"{Fore.RED + Style.BRIGHT}{d.replace('.json','')}{Style.RESET_ALL}"
             post_counts = '{:,}'.format(len(data)) + ' posts,'
             value = '{:,}'.format(round(size, 2)) + f" {fv} )"
@@ -133,14 +130,14 @@ class File:
     def get(cls, name):
         file_exists = exists(f"ChannelData/{name}.csv")
         if file_exists is True:
-            data = File.read(name)
-            start_post = f"{data[0]['datetime'][0]}.{data[0]['datetime'][1]}.{data[0]['datetime'][2]}"
-            end_post = f"{data[-1]['datetime'][0]}.{data[-1]['datetime'][1]}.{data[-1]['datetime'][2]}"
-            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_post}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_post}{Style.RESET_ALL}]"
+            data = File.read(f"{name}.csv")
+            start_date = data['date'].iloc[0]
+            end_date = data['date'].iloc[-1]
+            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_date}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_date}{Style.RESET_ALL}]"
             channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
             post_counts = '{:,}'.format(len(data)) + ' posts'
             print("{} {} ({})".format(dates, channel_name, post_counts))
-            return File.read(name)
+            return data
         else:
             print("App does not have any json file!")
             print("Use below cell to get channel data ..")
