@@ -131,12 +131,11 @@ class File:
         file_exists = exists(f"ChannelData/{name}.csv")
         if file_exists is True:
             data = File.read(f"{name}.csv")
-            start_date = data['date'].iloc[0]
-            end_date = data['date'].iloc[-1]
-            dates = f"[from:{Fore.CYAN + Style.BRIGHT}{start_date}{Style.RESET_ALL}, to:{Fore.CYAN + Style.BRIGHT}{end_date}{Style.RESET_ALL}]"
-            channel_name = f"{Fore.RED + Style.BRIGHT}{name}{Style.RESET_ALL}"
-            post_counts = '{:,}'.format(len(data)) + ' posts'
-            print("{} {} ({})".format(dates, channel_name, post_counts))
+            example_csv = data[["date", "time", "unixtime", "id", "view"]]
+            head1 = example_csv.head()
+            tail1 = example_csv.tail()
+            frames = [head1, tail1]
+            print(pd.concat(frames))
             return data
         else:
             print("App does not have any json file!")
