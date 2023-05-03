@@ -25,6 +25,7 @@ async def get(username, count):
                         post_author = item.post_author
 
                     td = item.date.astimezone(timezone(cf.zone))
+                    datetime_list = Time.dtlist(td)
                     post_detais = {
                         'id': item.id,
                         'is_forward': frw,
@@ -32,7 +33,8 @@ async def get(username, count):
                         'mention': replies,
                         'author': post_author,
                         'forward': item.forwards,
-                        'datetime': Time.dtlist(td),
+                        'date': datetime_list[0],
+                        'time': datetime_list[1],
                         'unixtime': int(item.date.timestamp()),
                     }
 
@@ -44,7 +46,8 @@ async def get(username, count):
     data.reverse()
     print(f"\nData size: {len(data)}")
     field_name = [
-        'datetime',
+        'date',
+        'time',
         'unixtime',
         'id',
         'is_forward',
