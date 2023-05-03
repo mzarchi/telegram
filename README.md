@@ -6,7 +6,8 @@
 <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed/mzarchi/telegram">
 <img src="https://img.shields.io/github/forks/mzarchi/telegram.svg">
 </p>
-# Telegram Analysis
+
+## Telegram Analysis
 
 ***Steps:***
 1. Go to [Telegram Apps](https://my.telegram.org/auth?to=apps) to get **_api_id_** and **_api_hash_**
