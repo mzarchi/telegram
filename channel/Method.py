@@ -165,116 +165,124 @@ def cdata(data, match_code, **p):
         'view_dict': {}, 'forw_dict': {}, 'repl_dict': {}
     }
 
-    for post in data:
+    for post in data.iterrows():
+        pid = post[1]['id']
+        pview = post[1]['view']
+        ptime = post[1]['time']
+        pdate = post[1]['date']
+        pmention = post[1]['mention']
+        pforward = post[1]['forward']
+        punixtime = post[1]['unixtime']
+        pis_forward = post[1]['is_forward']
         append_gate = False
+
         match match_code:
             case 0:  # No limit
-                if (post['is_forward'] == 0):
+                if (pis_forward == 0):
                     append_gate = True
 
             case 1:  # DateTime limit
-                if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime']):
+                if (pis_forward == 0):
+                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime']):
                         append_gate = True
 
             case 2:  # TimeRange limit
-                if (post['is_forward'] == 0):
+                if (pis_forward == 0):
                     start_time, stop_time = Time.reformat_time(
                         p['start_time'], p['stop_time'])
-                    pt = post['datetime']
-                    post_time = int(f"{pt[3]}{pt[4]}{pt[5]}")
+                    post_time = int(ptime.replace(":", ""))
                     if (post_time >= start_time and post_time <= stop_time):
                         append_gate = True
 
             case 3:  # View limit
-                if (post['is_forward'] == 0):
-                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view']):
+                if (pis_forward == 0):
+                    if (pview <= p['max_view'] and pview > p['min_view']):
                         append_gate = True
 
             case 4:  # Forward limit
-                if (post['is_forward'] == 0):
-                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
+                if (pis_forward == 0):
+                    if (pforward <= p['max_forward'] and pforward > p['min_forward']):
                         append_gate = True
 
             case 5:  # Mention limit
-                if (post['is_forward'] == 0):
-                    if (post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
+                if (pis_forward == 0):
+                    if (pmention <= p['max_mention'] and pmention > p['min_mention']):
                         append_gate = True
 
             case 6:  # ID limit
-                if (post['is_forward'] == 0):
-                    if (post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                if (pis_forward == 0):
+                    if (pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
 
             case 13:  # DateTime and View limit
-                if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
-                            post['view'] <= p['max_view'] and post['view'] > p['min_view']):
+                if (pis_forward == 0):
+                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                            pview <= p['max_view'] and pview > p['min_view']):
                         append_gate = True
 
             case 14:  # DateTime and Forward limit
-                if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
-                            post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
+                if (pis_forward == 0):
+                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                            pforward <= p['max_forward'] and pforward > p['min_forward']):
                         append_gate = True
 
             case 15:  # DateTime and Mention limit
-                if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
-                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
+                if (pis_forward == 0):
+                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                            pmention <= p['max_mention'] and pmention > p['min_mention']):
                         append_gate = True
 
             case 16:  # DateTime and ID limit
-                if (post['is_forward'] == 0):
-                    if (post['unixtime'] <= p['stop_datetime'] and post['unixtime'] > p['start_datetime'] and
-                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                if (pis_forward == 0):
+                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                            pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
 
             case 34:  # View and Forward limit
-                if (post['is_forward'] == 0):
-                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
-                            post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward']):
+                if (pis_forward == 0):
+                    if (pview <= p['max_view'] and pview > p['min_view'] and
+                            pforward <= p['max_forward'] and pforward > p['min_forward']):
                         append_gate = True
 
             case 35:  # View and Mention limit
-                if (post['is_forward'] == 0):
-                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
-                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
+                if (pis_forward == 0):
+                    if (pview <= p['max_view'] and pview > p['min_view'] and
+                            pmention <= p['max_mention'] and pmention > p['min_mention']):
                         append_gate = True
 
             case 36:  # View and ID limit
-                if (post['is_forward'] == 0):
-                    if (post['view'] <= p['max_view'] and post['view'] > p['min_view'] and
-                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                if (pis_forward == 0):
+                    if (pview <= p['max_view'] and pview > p['min_view'] and
+                            pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
 
             case 45:  # Forward and Mention limit
-                if (post['is_forward'] == 0):
-                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward'] and
-                            post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention']):
+                if (pis_forward == 0):
+                    if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
+                            pmention <= p['max_mention'] and pmention > p['min_mention']):
                         append_gate = True
 
             case 46:  # Forward and ID limit
-                if (post['is_forward'] == 0):
-                    if (post['forward'] <= p['max_forward'] and post['forward'] > p['min_forward'] and
-                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                if (pis_forward == 0):
+                    if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
+                            pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
 
             case 56:  # Mention and ID limit
-                if (post['is_forward'] == 0):
-                    if (post['mention'] <= p['max_mention'] and post['mention'] > p['min_mention'] and
-                            post['id'] <= p['max_id'] and post['id'] > p['min_id']):
+                if (pis_forward == 0):
+                    if (pmention <= p['max_mention'] and pmention > p['min_mention'] and
+                            pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
 
         if append_gate:
-            newdata.append(post)
+            newdata.append(post[1])
             result_dict['cont'].append(counter)
-            result_dict['view'].append(post['view'])
-            result_dict['forw'].append(post['forward'])
-            result_dict['repl'].append(post['mention'])
-            result_dict['view_dict'].update({post['id']: post['view']})
-            result_dict['forw_dict'].update({post['id']: post['forward']})
-            result_dict['repl_dict'].update({post['id']: post['mention']})
+            result_dict['view'].append(pview)
+            result_dict['forw'].append(pforward)
+            result_dict['repl'].append(pmention)
+            result_dict['view_dict'].update({pid: pview})
+            result_dict['forw_dict'].update({pid: pforward})
+            result_dict['repl_dict'].update({pid: pmention})
 
         counter += 1
     return newdata, result_dict
@@ -285,7 +293,9 @@ def drv(data):
     forw_rate = 4
     ment_rate = 2
 
-    day_dict, rte_dict, viw_dict = {}
+    day_dict = {}
+    rte_dict = {}
+    viw_dict = {}
     for i in range(0, 96):
         day_dict.update({i: 0})
         rte_dict.update({i: 0})
