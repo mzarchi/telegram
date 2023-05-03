@@ -285,9 +285,7 @@ def drv(data):
     forw_rate = 4
     ment_rate = 2
 
-    day_dict = {}
-    rte_dict = {}
-    viw_dict = {}
+    day_dict, rte_dict, viw_dict = {}
     for i in range(0, 96):
         day_dict.update({i: 0})
         rte_dict.update({i: 0})
