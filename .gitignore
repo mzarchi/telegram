@@ -1,4 +1,5 @@
 _*
+.vscode/
 .env
 *.txt
 *.csv
