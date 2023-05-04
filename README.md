@@ -2,8 +2,6 @@
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/mzarchi/telegram">
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/mzarchi/telegram">
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/mzarchi/telegram">
-<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/mzarchi/telegram">
-<img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed/mzarchi/telegram">
 <img src="https://img.shields.io/github/forks/mzarchi/telegram.svg">
 </p>
 
