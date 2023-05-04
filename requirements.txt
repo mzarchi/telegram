@@ -1,3 +1,4 @@
 pytz
 telethon
 colorama
+python-dotenv
