@@ -89,11 +89,6 @@ class File:
             writer.writeheader()
             writer.writerows(data)
 
-        #txt = json.dumps(data)
-        #f = open(f"ChannelData/{username}.json", "a")
-        # f.write(txt)
-        # f.close()
-
     @classmethod
     def read(cls, username):
         return pd.read_csv(f'ChannelData/{username}')
