@@ -5,21 +5,24 @@
 
 ## Telegram Analysis
 
-***Steps:***
+**_Steps:_**
+
 1. Go to [Telegram Apps](https://my.telegram.org/auth?to=apps) to get **_api_id_** and **_api_hash_**
 
-2. Clone repo by ```git clone https://github.com/mzarchi/telegram.git```
+2. Clone repo by `git clone https://github.com/mzarchi/telegram.git`
 
-3. Install lib by ```pip install -r requirements.txt```
+3. Install lib by `pip install -r requirements.txt`
 
-4. Rename ```/config/appconfig_ignore.py``` to ```/config/appconfig.py``` and put your **_api_id_** and **_api_hash_**
-    > <sub>At this step, you must have **api_id** and **api_hash**</sub>
+4. Copy `.env.example` to `.env` and put your **_api_id_** and **_api_hash_** with `cp .env.example .env`
 
-5. Login to your **Telegram** account by ```/login/main.py``` and save **automatically** your session in ```/sessions```
+   > <sub>At this step, you must have **api_id** and **api_hash**</sub>
 
-6. Open ```/channel/analysis.ipynb``` and run first cell
+5. Login to your **Telegram** account by `/login/main.py` and save **automatically** your session in `/sessions`
 
-## Supported params in ```/channel/analysis.ipynb```
+6. Open `/channel/analysis.ipynb` and run first cell
+
+## Supported params in `/channel/analysis.ipynb`
+
 The most important cell in this notebook is this:
 
 ```
@@ -36,7 +39,8 @@ dics = cdata(
 )
 ```
 
-According to the following ```match_case```:
+According to the following `match_case`:
+
 ```
 0 : No limit *
 1 : DateTime limit *
@@ -56,4 +60,5 @@ According to the following ```match_case```:
 46 : Forward & ID limit *
 56 : Mention & ID limit *
 ```
+
 You can get the data you want in an edited form!
