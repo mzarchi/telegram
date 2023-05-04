@@ -1,7 +1,6 @@
 _*
-.*
+.env
 *.txt
 *.csv
 !requirements.txt
 test*
-appconfig.py
