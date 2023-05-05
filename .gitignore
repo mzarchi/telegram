@@ -1,7 +1,5 @@
 _*
 .vscode/
 .env
-*.txt
 *.csv
-!requirements.txt
 test*
