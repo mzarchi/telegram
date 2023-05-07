@@ -147,8 +147,7 @@ class File:
 
 class Config:
     def __init__(self):
-        sys.path.append(sys.path[0].replace('/channel', '/config'))
-        import appconfig as ac
+        import config as ac
         self.id = ac.api_id
         self.hash = ac.api_hash
         self.zone = ac.timezone
