@@ -42,23 +42,23 @@ dics = cdata(
 According to the following `match_case`:
 
 ```
-0 : No limit *
-1 : DateTime limit *
-2 : TimeRange limit *
-3 : View limit *
-4 : Forward limit *
-5 : Mention limit *
-6 : ID limit *
-13 : DateTime & View limit *
-14 : DateTime & Forward limit *
-15 : DateTime & Mention limit *
-16 : DateTime & ID limit *
-34 : View & Forward limit *
-35 : View & Mention limit *
-36 : View & ID limit *
-45 : Forward & Mention limit *
-46 : Forward & ID limit *
-56 : Mention & ID limit *
+0 : No limit
+1 : DateTime limit
+2 : TimeRange limit
+3 : View limit
+4 : Forward limit
+5 : Mention limit
+6 : ID limit
+13 : DateTime & View limit
+14 : DateTime & Forward limit
+15 : DateTime & Mention limit
+16 : DateTime & ID limit
+34 : View & Forward limit
+35 : View & Mention limit
+36 : View & ID limit
+45 : Forward & Mention limit
+46 : Forward & ID limit
+56 : Mention & ID limit
 ```
 
 You can get the data you want in an edited form!
