@@ -6,7 +6,7 @@ from pytz import timezone
 async def get(username, count):
     data = []
     cf = Config()
-    async with TelegramClient('../sessions/testmy', cf.id, cf.hash) as client:
+    async with TelegramClient('../sessions/test', cf.id, cf.hash) as client:
         print("Start streaming ...")
         for item in await client.get_messages(username, limit=count):
             if item.views is not None:
