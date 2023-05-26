@@ -62,5 +62,3 @@ According to the following `match_case`:
 ```
 
 You can get the data you want in an edited form!
-
-## ToDo
