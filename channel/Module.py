@@ -147,6 +147,8 @@ class File:
 
 class Config:
     def __init__(self):
+        import sys
+        sys.path.append('../')
         import config as ac
         self.id = ac.api_id
         self.hash = ac.api_hash
