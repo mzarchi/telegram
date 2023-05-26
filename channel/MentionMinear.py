@@ -1,11 +1,11 @@
 from telethon.sync import TelegramClient
 
 import sys
-sys.path.append('./config')
-import appconfig as ac
+sys.path.append('./')
+import config as ac
 
 
-tclient = TelegramClient('../sessions/my', ac.api_id, ac.api_hash)
+tclient = TelegramClient('./sessions/test', ac.api_id, ac.api_hash)
 
 
 def get_comments(client, channel, message_id):
@@ -24,7 +24,7 @@ def get_comments(client, channel, message_id):
     return data
 
 
-post_link = "https://t.me/Ghalomaghal/9384"
+post_link = "https://t.me/MohammadZarchi/158"
 cd = post_link.split('/')
 post_id = int(cd[4])
 user_ids = []
