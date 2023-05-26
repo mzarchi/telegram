@@ -3,7 +3,7 @@
 <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/mzarchi/telegram">
 </p>
 
-## Telegram content analysis
+## Telegram contents analysis
 
 **_Steps:_**
 
