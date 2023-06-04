@@ -1,5 +1,4 @@
 import os
-import sys
 import csv
 import time
 import pandas as pd
@@ -33,6 +32,8 @@ class Time:
         # Convert timestamp to point
         # dt = [2023, 03, 25]
         xy = int(dt[0]) - 2013
+
+        # if int(dt[2])
         match int(dt[2]):
             case 1 | 7 | 13 | 19 | 25:
                 xy += 0.16
@@ -143,6 +144,19 @@ class File:
             return f"0{number}"
         elif number >= 100:
             return f"{number}"
+
+
+class download:
+    import wget
+
+    def __wget(url: str, filename: str):
+        wget.download(url, bar=lambda current, total, width=20: "Downloading %s: %d%% [%f / %f] Mb" % (filename,
+                                                                                                       current / total * 100, round(current/1024/1024, 2), round(total/1024/1024, 2)))
+
+    @classmethod
+    def dwget(dln, url: str, filename: str):
+        dln.__wget(url, filename)
+        print("\n", end="")
 
 
 class Config:
