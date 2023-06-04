@@ -1,5 +1,6 @@
 wget
 pytz
-telethon
+pandas
 colorama
+telethon
 python-dotenv
