@@ -24,7 +24,7 @@ def get_comments(client, channel, message_id):
     return data
 
 
-post_link = "https://t.me/MohammadZarchi/158"
+post_link = "https://t.me/MohammadZarchi/163"
 cd = post_link.split('/')
 post_id = int(cd[4])
 user_ids = []
