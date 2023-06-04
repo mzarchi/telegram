@@ -1,6 +1,7 @@
 _*
 .vscode/
 .venv/
+.conda/
 .env
 *.csv
 test*
