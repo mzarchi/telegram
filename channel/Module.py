@@ -145,12 +145,11 @@ class File:
         elif number >= 100:
             return f"{number}"
 
-
 class download:
     import wget
 
     def __wget(url: str, filename: str):
-        wget.download(url, bar=lambda current, total, width=20: "Downloading %s: %d%% [%f / %f] Mb" % (filename,
+        download.wget.download(url, bar=lambda current, total, width=20: "Downloading %s: %d%% [%f / %f] Mb" % (filename,
                                                                                                        current / total * 100, round(current/1024/1024, 2), round(total/1024/1024, 2)))
 
     @classmethod

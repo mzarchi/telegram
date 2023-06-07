@@ -1,6 +1,6 @@
-wget
 pytz
 pandas
+requests
 colorama
 telethon
 python-dotenv

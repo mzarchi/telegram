@@ -90,7 +90,6 @@ async def get_src(username, count):
 def scatter_handel(data):
     sd = {}
     ds = []
-    distance_ts = []
     xp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
     yp = {'g1': [], 'g2': [], 'g3': [], 'g4': []}
 
@@ -108,7 +107,6 @@ def scatter_handel(data):
 
     try:
         for p in data:
-            # distance_ts.append(data[i+1]['unixtime'] - data[i]['unixtime'])
             xy, ym = Time.points(p['date'].split("-"))
             dname = p['date'].replace("-", ".")
             dsv = p['date'].replace("-", "")
@@ -126,7 +124,7 @@ def scatter_handel(data):
     except:
         pass
 
-    return xp, yp, today  # , distance_ts
+    return xp, yp, today
 
 
 def pdistance(distance, day_count):
