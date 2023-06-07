@@ -1,22 +1,6 @@
 from telethon.sync import TelegramClient
-from Module import Time, File, Config, download
+from Module import Time, File, Config
 from pytz import timezone
-
-
-async def get_tests():
-    base_url = 'https://raw.githubusercontent.com/mzarchi/telegram-data/master/ChannelData/'
-    urls = [
-        'MiladNouriChannel.csv',
-        'MohammadZarchi.csv',
-        'OfficialPersianTwitter.csv',
-        'TechTube.csv',
-        'durov.csv',
-        'jadinet.csv',
-        'webamoozir.csv'
-    ]
-
-    for url in urls:
-        download.wget(base_url + url)
 
 
 async def get(username, count):
