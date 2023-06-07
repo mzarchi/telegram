@@ -1,8 +1,10 @@
 import os
 import csv
 import time
+import requests
 import pandas as pd
 
+from tqdm import tqdm
 from os.path import exists
 from datetime import datetime
 from colorama import Fore, Style
@@ -145,17 +147,32 @@ class File:
         elif number >= 100:
             return f"{number}"
 
+
 class download:
-    import wget
-
-    def __wget(url: str, filename: str):
-        download.wget.download(url, bar=lambda current, total, width=20: "Downloading %s: %d%% [%f / %f] Mb" % (filename,
-                                                                                                       current / total * 100, round(current/1024/1024, 2), round(total/1024/1024, 2)))
-
     @classmethod
-    def dwget(dln, url: str, filename: str):
-        dln.__wget(url, filename)
-        print("\n", end="")
+    async def dwget(self):
+        channel_data = [
+            'MiladNouriChannel.csv',
+            'MohammadZarchi.csv',
+            'OfficialPersianTwitter.csv',
+            'TechTube.csv',
+            'durov.csv',
+            'jadinet.csv',
+            'webamoozir.csv'
+        ]
+        root_url = "https://raw.githubusercontent.com/mzarchi/telegram-data/master/ChannelData/"
+
+        for item in channel_data:
+            response = requests.get(root_url + item, stream=True)
+            total_size = int(response.headers.get('content-length', 0))
+            progress_bar = tqdm(total=total_size, unit='b', unit_scale=True)
+            block_size = 1024*1024
+            with open("ChannelData/" + item, 'wb') as file:
+                for data in response.iter_content(block_size):
+                    progress_bar.update(len(data))
+                    file.write(data)
+
+            progress_bar.close()
 
 
 class Config:
