@@ -7,7 +7,6 @@ async def get(username, count):
     data = []
     cf = Config()
     async with TelegramClient('../sessions/test', cf.id, cf.hash) as client:
-        print("Start streaming ...")
         for item in await client.get_messages(username, limit=count):
             if item.views is not None:
                 frw = 0
@@ -130,6 +129,7 @@ def cdata(data, match_code, **p):
     4 : Forward limit *
     5 : Mention limit *
     6 : ID limit *
+    7 : Admins
     12 : DateTime & TimeRange limit
     13 : DateTime & View limit *
     14 : DateTime & Forward limit *
@@ -167,6 +167,7 @@ def cdata(data, match_code, **p):
         pview = post[1]['view']
         ptime = post[1]['time']
         pdate = post[1]['date']
+        author = post[1]['author']
         pmention = post[1]['mention']
         pforward = post[1]['forward']
         punixtime = post[1]['unixtime']
@@ -208,6 +209,12 @@ def cdata(data, match_code, **p):
             case 6:  # ID limit
                 if (pis_forward == 0):
                     if (pid <= p['max_id'] and pid > p['min_id']):
+                        append_gate = True
+
+            case 7:  # Admins
+                admins = p['admins']
+                if (pis_forward == 0):
+                    if author in admins:
                         append_gate = True
 
             case 13:  # DateTime and View limit
