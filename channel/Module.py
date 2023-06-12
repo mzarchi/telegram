@@ -94,7 +94,7 @@ class File:
 
     @classmethod
     def read(cls, username):
-        return pd.read_csv(f'ChannelData/{username}')
+        return pd.read_csv(f'ChannelData/{username}', low_memory=False)
 
     @classmethod
     def show(cls):
