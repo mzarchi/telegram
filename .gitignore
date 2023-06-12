@@ -1,7 +1,8 @@
-_*
+.ipynb_checkpoints/
 .vscode/
-.venv/
 .conda/
-.env
+.venv/
 *.csv
 test*
+.env
+_*
