@@ -129,7 +129,7 @@ def cdata(data, match_code, **p):
     4 : Forward limit *
     5 : Mention limit *
     6 : ID limit *
-    7 : Admins
+    7 : Admins *
     12 : DateTime & TimeRange limit
     13 : DateTime & View limit *
     14 : DateTime & Forward limit *
@@ -144,6 +144,7 @@ def cdata(data, match_code, **p):
     45 : Forward & Mention limit *
     46 : Forward & ID limit *
     56 : Mention & ID limit *
+    67 : ID limit & Admins *
     123 : DateTime & TimeRange & View limit
     124 : DateTime & TimeRange & Forward limit
     125 : DateTime & TimeRange & Mention limit
@@ -212,9 +213,8 @@ def cdata(data, match_code, **p):
                         append_gate = True
 
             case 7:  # Admins
-                admins = p['admins']
                 if (pis_forward == 0):
-                    if author in admins:
+                    if author in p['admins']:
                         append_gate = True
 
             case 13:  # DateTime and View limit
@@ -276,6 +276,10 @@ def cdata(data, match_code, **p):
                     if (pmention <= p['max_mention'] and pmention > p['min_mention'] and
                             pid <= p['max_id'] and pid > p['min_id']):
                         append_gate = True
+
+            case 67:  # ID limit & Admins
+                if (pid <= p['max_id'] and pid > p['min_id'] and author in p['admins']):
+                    append_gate = True
 
         if append_gate:
             newdata.append(post[1])
