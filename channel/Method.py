@@ -325,3 +325,29 @@ def drv(data):
         viw_dict[day_andis].append(p['view'])
 
     return day_dict, rte_dict, viw_dict
+
+
+def show_admins(admins: dict):
+    for a in admins.keys():
+        print("admin-id: {:<5s} message-count: {:<8s} admin-name: {}".format(
+            str(a), str(admins[a]['count']), admins[a]['author']))
+
+
+def admins_status(data):
+    admins = {}
+    dict_key = {}
+    counter = 1
+
+    for p in data:
+        if isinstance(p['author'], str):
+            if p['author'] in dict_key.values():
+                # Get index by value
+                key = [k for k, v in dict_key.items() if v == p['author']][0]
+                admins[key]['count'] += 1
+            else:
+                dict_key.update({counter: p['author']})
+                admins.update({counter: {'author': p['author'], 'count': 1}})
+                counter += 1
+
+    show_admins(admins=admins)
+    return admins
