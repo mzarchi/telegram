@@ -134,10 +134,11 @@ class File:
             tail1 = example_csv.tail()
             frames = [head1, tail1]
             print(pd.concat(frames))
+            print("\nAfter this, run cell code 6")
             return data
         else:
             print("App does not have any json file!")
-            print("Use below cell to get channel data ..")
+            print("Use cell (code: 5) to get channel data")
 
     def __setnum(number):
         if number >= 1 and number < 10:
