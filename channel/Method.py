@@ -351,3 +351,13 @@ def admins_status(data):
 
     show_admins(admins=admins)
     return admins
+
+
+def merge_admins(admins: dict, merge_list: list):
+    for ml in merge_list:
+        for i in range(1, len(ml)):
+            admins[ml[0]]['count'] += admins[ml[i]]['count']
+            admins.pop(ml[i])
+
+    show_admins(admins=admins)
+    return admins
