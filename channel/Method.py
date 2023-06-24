@@ -122,38 +122,57 @@ def pdistance(distance, day_count):
 
 def cdata(data, match_code, **p):
     """
-    0 : No limit *
-    1 : DateTime limit *
-    2 : TimeRange limit *
-    3 : View limit *
-    4 : Forward limit *
-    5 : Mention limit *
-    6 : ID limit *
-    7 : Admins *
+    0 : No limit
+    1 : DateTime limit
+    2 : TimeRange limit
+    3 : View limit
+    4 : Forward limit 
+    5 : Mention limit
+    6 : ID limit
+    7 : Admins
     12 : DateTime & TimeRange limit
-    13 : DateTime & View limit *
-    14 : DateTime & Forward limit *
-    15 : DateTime & Mention limit *
-    16 : DateTime & ID limit *
+    13 : DateTime & View limit
+    14 : DateTime & Forward limit
+    15 : DateTime & Mention limit
+    16 : DateTime & ID limit
+    17 : DateTime & Admins
     23 : TimeRange & View limit
     24 : TimeRange & Forward limit
     25 : TimeRange & Mention limit
-    34 : View & Forward limit *
-    35 : View & Mention limit *
-    36 : View & ID limit *
-    45 : Forward & Mention limit *
-    46 : Forward & ID limit *
-    56 : Mention & ID limit *
-    67 : ID limit & Admins *
+    26 : TimeRange & ID limit
+    27 : TimeRange & Admins limit
+    34 : View & Forward limit
+    35 : View & Mention limit
+    36 : View & ID limit
+    37 : View & Admins limit
+    45 : Forward & Mention limit
+    46 : Forward & ID limit
+    47 : Forward & Admins limit
+    56 : Mention & ID limit
+    57 : Mention & Admins limit
+    67 : ID limit & Admins
     123 : DateTime & TimeRange & View limit
     124 : DateTime & TimeRange & Forward limit
     125 : DateTime & TimeRange & Mention limit
+    126 : DateTime & TimeRange & ID limit
+    127 : DateTime & TimeRange & Admins limit
     234 : TimeRange & Favorite & Forward limit
     235 : TimeRange & Favorite & Mention limit
+    236 : TimeRange & Favorite & ID limit
+    237 : TimeRange & Favorite & Admins limit
     345 : View & Forward & Mention limit
+    346 : View & Forward & ID limit
+    347 : View & Forward & Admins limit
     1234 : DateTime & TimeRange & View & Forward limit
     1235 : DateTime & TimeRange & View & Mention limit
+    1236 : DateTime & TimeRange & View & ID limit
+    1237 : DateTime & TimeRange & View & Admins limit
     12345 : DateTime & TimeRange & View & Forward & Mention limit
+    12346 : DateTime & TimeRange & View & Forward & ID limit
+    12347 : DateTime & TimeRange & View & Forward & Admins limit
+    123456 : DateTime & TimeRange & View & Forward & Mention & ID limit
+    123457 : DateTime & TimeRange & View & Forward & Mention & Admins limit
+    1234567 : DateTime & TimeRange & View & Forward & Mention & ID & Admins limit
     """
 
     counter = 1
@@ -333,7 +352,7 @@ def show_admins(admins: dict):
             str(a), str(admins[a]['count']), admins[a]['author']))
 
 
-def admins_status(data):
+def admins_status(data: dict):
     admins = {}
     dict_key = {}
     counter = 1
