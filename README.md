@@ -43,56 +43,56 @@ According to the following `match_case` :
 
 
 - [x] 0 : No limit<br>
-- [x] 1 : DateTime limit
-- [x] 2 : TimeRange limit
-- [x] 3 : View limit
-- [x] 4 : Forward limit 
-- [x] 5 : Mention limit
-- [x] 6 : ID limit
-- [x] 7 : Admins
-- [ ] 12 : DateTime & TimeRange limit
-- [x] 13 : DateTime & View limit
-- [x] 14 : DateTime & Forward limit
-- [x] 15 : DateTime & Mention limit
-- [x] 16 : DateTime & ID limit
-- [ ] 17 : DateTime & Admins
-- [ ] 23 : TimeRange & View limit
-- [ ] 24 : TimeRange & Forward limit
-- [ ] 25 : TimeRange & Mention limit
-- [ ] 26 : TimeRange & ID limit
-- [ ] 27 : TimeRange & Admins limit
-- [x] 34 : View & Forward limit
-- [x] 35 : View & Mention limit
-- [x] 36 : View & ID limit
-- [ ] 37 : View & Admins limit
-- [x] 45 : Forward & Mention limit
-- [x] 46 : Forward & ID limit
-- [ ] 47 : Forward & Admins limit
-- [x] 56 : Mention & ID limit
-- [x] 57 : Mention & Admins limit
-- [ ] 67 : ID limit & Admins
-- [ ] 123 : DateTime & TimeRange & View limit
-- [ ] 124 : DateTime & TimeRange & Forward limit
-- [ ] 125 : DateTime & TimeRange & Mention limit
-- [ ] 126 : DateTime & TimeRange & ID limit
-- [ ] 127 : DateTime & TimeRange & Admins limit
-- [ ] 234 : TimeRange & Favorite & Forward limit
-- [ ] 235 : TimeRange & Favorite & Mention limit
-- [ ] 236 : TimeRange & Favorite & ID limit
-- [ ] 237 : TimeRange & Favorite & Admins limit
-- [ ] 345 : View & Forward & Mention limit
-- [ ] 346 : View & Forward & ID limit
-- [ ] 347 : View & Forward & Admins limit
-- [ ] 1234 : DateTime & TimeRange & View & Forward limit
-- [ ] 1235 : DateTime & TimeRange & View & Mention limit
-- [ ] 1236 : DateTime & TimeRange & View & ID limit
-- [ ] 1237 : DateTime & TimeRange & View & Admins limit
-- [ ] 12345 : DateTime & TimeRange & View & Forward & Mention limit
-- [ ] 12346 : DateTime & TimeRange & View & Forward & ID limit
-- [ ] 12347 : DateTime & TimeRange & View & Forward & Admins limit
-- [ ] 123456 : DateTime & TimeRange & View & Forward & Mention & ID limit
-- [ ] 123457 : DateTime & TimeRange & View & Forward & Mention & Admins limit
-- [ ] 1234567 : DateTime & TimeRange & View & Forward & Mention & ID & Admins limit
+- [x] 1 : <b>DateTime</b> limit
+- [x] 2 : <b>TimeRange</b> limit
+- [x] 3 : <b>View</b> limit
+- [x] 4 : <b>Forward</b> limit 
+- [x] 5 : <b>Mention</b> limit
+- [x] 6 : <b>ID</b> limit
+- [x] 7 : <b>Admins</b>
+- [ ] 12 : <b>DateTime</b> & <b>TimeRange</b> limit
+- [x] 13 : <b>DateTime</b> & <b>View</b> limit
+- [x] 14 : <b>DateTime</b> & <b>Forward</b> limit
+- [x] 15 : <b>DateTime</b> & <b>Mention</b> limit
+- [x] 16 : <b>DateTime</b> & <b>ID</b> limit
+- [ ] 17 : <b>DateTime</b> & <b>Admins</b>
+- [ ] 23 : <b>TimeRange</b> & <b>View</b> limit
+- [ ] 24 : <b>TimeRange</b> & <b>Forward</b> limit
+- [ ] 25 : <b>TimeRange</b> & <b>Mention</b> limit
+- [ ] 26 : <b>TimeRange</b> & <b>ID</b> limit
+- [ ] 27 : <b>TimeRange</b> & <b>Admins</b> limit
+- [x] 34 : <b>View</b> & <b>Forward</b> limit
+- [x] 35 : <b>View</b> & <b>Mention</b> limit
+- [x] 36 : <b>View</b> & <b>ID</b> limit
+- [ ] 37 : <b>View</b> & <b>Admins</b> limit
+- [x] 45 : <b>Forward</b> & <b>Mention</b> limit
+- [x] 46 : <b>Forward</b> & <b>ID</b> limit
+- [ ] 47 : <b>Forward</b> & <b>Admins</b> limit
+- [x] 56 : <b>Mention</b> & <b>ID</b> limit
+- [x] 57 : <b>Mention</b> & <b>Admins</b> limit
+- [ ] 67 : <b>ID</b> limit & <b>Admins</b>
+- [ ] 123 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> limit
+- [ ] 124 : <b>DateTime</b> & <b>TimeRange</b> & <b>Forward</b> limit
+- [ ] 125 : <b>DateTime</b> & <b>TimeRange</b> & <b>Mention</b> limit
+- [ ] 126 : <b>DateTime</b> & <b>TimeRange</b> & <b>ID</b> limit
+- [ ] 127 : <b>DateTime</b> & <b>TimeRange</b> & <b>Admins</b> limit
+- [ ] 234 : <b>TimeRange</b> & Favorite & <b>Forward</b> limit
+- [ ] 235 : <b>TimeRange</b> & Favorite & <b>Mention</b> limit
+- [ ] 236 : <b>TimeRange</b> & Favorite & <b>ID</b> limit
+- [ ] 237 : <b>TimeRange</b> & Favorite & <b>Admins</b> limit
+- [ ] 345 : <b>View</b> & <b>Forward</b> & <b>Mention</b> limit
+- [ ] 346 : <b>View</b> & <b>Forward</b> & <b>ID</b> limit
+- [ ] 347 : <b>View</b> & <b>Forward</b> & <b>Admins</b> limit
+- [ ] 1234 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> limit
+- [ ] 1235 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Mention</b> limit
+- [ ] 1236 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>ID</b> limit
+- [ ] 1237 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Admins</b> limit
+- [ ] 12345 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>Mention</b> limit
+- [ ] 12346 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>ID</b> limit
+- [ ] 12347 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>Admins</b> limit
+- [ ] 123456 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>Mention</b> & <b>ID</b> limit
+- [ ] 123457 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>Mention</b> & <b>Admins</b> limit
+- [ ] 1234567 : <b>DateTime</b> & <b>TimeRange</b> & <b>View</b> & <b>Forward</b> & <b>Mention</b> & <b>ID</b> & <b>Admins</b> limit
 
 
 You can get the data you want in an edited form!
