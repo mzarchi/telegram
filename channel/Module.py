@@ -36,19 +36,20 @@ class Time:
         xy = int(dt[0]) - 2013
 
         # if int(dt[2])
-        match int(dt[2]):
-            case 1 | 7 | 13 | 19 | 25:
-                xy += 0.16
-            case 2 | 8 | 14 | 20 | 26:
-                xy += 0.29
-            case 3 | 9 | 15 | 21 | 27:
-                xy += 0.46
-            case 4 | 10 | 16 | 22 | 28:
-                xy += 0.59
-            case 5 | 11 | 17 | 23 | 29:
-                xy += 0.72
-            case 6 | 12 | 18 | 24 | 30 | 31:
-                xy += 0.85
+
+        dt_value = int(dt[2])
+        if dt_value in [1, 7, 13, 19, 25]:
+            xy += 0.16
+        elif dt_value in [2, 8, 14, 20, 26]:
+            xy += 0.29
+        elif dt_value in [3, 9, 15, 21, 27]:
+            xy += 0.46
+        elif dt_value in [4, 10, 16, 22, 28]:
+            xy += 0.59
+        elif dt_value in [5, 11, 17, 23, 29]:
+            xy += 0.72
+        elif dt_value in [6, 12, 18, 24, 30, 31]:
+            xy += 0.85
 
         ym = int(dt[1]) - 1
         day = int(dt[2])
