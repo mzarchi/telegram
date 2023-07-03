@@ -3,7 +3,7 @@ from Module import Time, File, Config
 from pytz import timezone
 
 
-async def get(username, count):
+async def get(username: str, count: int):
     data = []
     cf = Config()
     async with TelegramClient('../sessions/test', cf.id, cf.hash) as client:
@@ -194,111 +194,110 @@ def cdata(data, match_code, **p):
         pis_forward = post[1]['is_forward']
         append_gate = False
 
-        match match_code:
-            case 0:  # No limit
-                append_gate = True
+        if match_code == 0:  # No limit
+            append_gate = True
 
-            case 1:  # DateTime limit
-                if (pis_forward == 0):
-                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime']):
-                        append_gate = True
-
-            case 2:  # TimeRange limit
-                if (pis_forward == 0):
-                    start_time, stop_time = Time.reformat_time(
-                        p['start_time'], p['stop_time'])
-                    post_time = int(ptime.replace(":", ""))
-                    if (post_time >= start_time and post_time <= stop_time):
-                        append_gate = True
-
-            case 3:  # View limit
-                if (pis_forward == 0):
-                    if (pview <= p['max_view'] and pview > p['min_view']):
-                        append_gate = True
-
-            case 4:  # Forward limit
-                if (pis_forward == 0):
-                    if (pforward <= p['max_forward'] and pforward > p['min_forward']):
-                        append_gate = True
-
-            case 5:  # Mention limit
-                if (pis_forward == 0):
-                    if (pmention <= p['max_mention'] and pmention > p['min_mention']):
-                        append_gate = True
-
-            case 6:  # ID limit
-                if (pis_forward == 0):
-                    if (pid <= p['max_id'] and pid > p['min_id']):
-                        append_gate = True
-
-            case 7:  # Admins
-                if (pis_forward == 0):
-                    if author in p['admins']:
-                        append_gate = True
-
-            case 13:  # DateTime and View limit
-                if (pis_forward == 0):
-                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
-                            pview <= p['max_view'] and pview > p['min_view']):
-                        append_gate = True
-
-            case 14:  # DateTime and Forward limit
-                if (pis_forward == 0):
-                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
-                            pforward <= p['max_forward'] and pforward > p['min_forward']):
-                        append_gate = True
-
-            case 15:  # DateTime and Mention limit
-                if (pis_forward == 0):
-                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
-                            pmention <= p['max_mention'] and pmention > p['min_mention']):
-                        append_gate = True
-
-            case 16:  # DateTime and ID limit
-                if (pis_forward == 0):
-                    if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
-                            pid <= p['max_id'] and pid > p['min_id']):
-                        append_gate = True
-
-            case 34:  # View and Forward limit
-                if (pis_forward == 0):
-                    if (pview <= p['max_view'] and pview > p['min_view'] and
-                            pforward <= p['max_forward'] and pforward > p['min_forward']):
-                        append_gate = True
-
-            case 35:  # View and Mention limit
-                if (pis_forward == 0):
-                    if (pview <= p['max_view'] and pview > p['min_view'] and
-                            pmention <= p['max_mention'] and pmention > p['min_mention']):
-                        append_gate = True
-
-            case 36:  # View and ID limit
-                if (pis_forward == 0):
-                    if (pview <= p['max_view'] and pview > p['min_view'] and
-                            pid <= p['max_id'] and pid > p['min_id']):
-                        append_gate = True
-
-            case 45:  # Forward and Mention limit
-                if (pis_forward == 0):
-                    if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
-                            pmention <= p['max_mention'] and pmention > p['min_mention']):
-                        append_gate = True
-
-            case 46:  # Forward and ID limit
-                if (pis_forward == 0):
-                    if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
-                            pid <= p['max_id'] and pid > p['min_id']):
-                        append_gate = True
-
-            case 56:  # Mention and ID limit
-                if (pis_forward == 0):
-                    if (pmention <= p['max_mention'] and pmention > p['min_mention'] and
-                            pid <= p['max_id'] and pid > p['min_id']):
-                        append_gate = True
-
-            case 67:  # ID limit & Admins
-                if (pid <= p['max_id'] and pid > p['min_id'] and author in p['admins']):
+        elif match_code == 1:  # DateTime limit
+            if (pis_forward == 0):
+                if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime']):
                     append_gate = True
+
+        elif match_code == 2:  # TimeRange limit
+            if (pis_forward == 0):
+                start_time, stop_time = Time.reformat_time(
+                    p['start_time'], p['stop_time'])
+                post_time = int(ptime.replace(":", ""))
+                if (post_time >= start_time and post_time <= stop_time):
+                    append_gate = True
+
+        elif match_code == 3:  # View limit
+            if (pis_forward == 0):
+                if (pview <= p['max_view'] and pview > p['min_view']):
+                    append_gate = True
+
+        elif match_code == 4:  # Forward limit
+            if (pis_forward == 0):
+                if (pforward <= p['max_forward'] and pforward > p['min_forward']):
+                    append_gate = True
+
+        elif match_code == 5:  # Mention limit
+            if (pis_forward == 0):
+                if (pmention <= p['max_mention'] and pmention > p['min_mention']):
+                    append_gate = True
+
+        elif match_code == 6:  # ID limit
+            if (pis_forward == 0):
+                if (pid <= p['max_id'] and pid > p['min_id']):
+                    append_gate = True
+
+        elif match_code == 7:  # Admins
+            if (pis_forward == 0):
+                if author in p['admins']:
+                    append_gate = True
+
+        elif match_code == 13:  # DateTime and View limit
+            if (pis_forward == 0):
+                if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                        pview <= p['max_view'] and pview > p['min_view']):
+                    append_gate = True
+
+        elif match_code == 14:  # DateTime and Forward limit
+            if (pis_forward == 0):
+                if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                        pforward <= p['max_forward'] and pforward > p['min_forward']):
+                    append_gate = True
+
+        elif match_code == 15:  # DateTime and Mention limit
+            if (pis_forward == 0):
+                if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                        pmention <= p['max_mention'] and pmention > p['min_mention']):
+                    append_gate = True
+
+        elif match_code == 16:  # DateTime and ID limit
+            if (pis_forward == 0):
+                if (punixtime <= p['stop_datetime'] and punixtime > p['start_datetime'] and
+                        pid <= p['max_id'] and pid > p['min_id']):
+                    append_gate = True
+
+        elif match_code == 34:  # View and Forward limit
+            if (pis_forward == 0):
+                if (pview <= p['max_view'] and pview > p['min_view'] and
+                        pforward <= p['max_forward'] and pforward > p['min_forward']):
+                    append_gate = True
+
+        elif match_code == 35:  # View and Mention limit
+            if (pis_forward == 0):
+                if (pview <= p['max_view'] and pview > p['min_view'] and
+                        pmention <= p['max_mention'] and pmention > p['min_mention']):
+                    append_gate = True
+
+        elif match_code == 36:  # View and ID limit
+            if (pis_forward == 0):
+                if (pview <= p['max_view'] and pview > p['min_view'] and
+                        pid <= p['max_id'] and pid > p['min_id']):
+                    append_gate = True
+
+        elif match_code == 45:  # Forward and Mention limit
+            if (pis_forward == 0):
+                if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
+                        pmention <= p['max_mention'] and pmention > p['min_mention']):
+                    append_gate = True
+
+        elif match_code == 46:  # Forward and ID limit
+            if (pis_forward == 0):
+                if (pforward <= p['max_forward'] and pforward > p['min_forward'] and
+                        pid <= p['max_id'] and pid > p['min_id']):
+                    append_gate = True
+
+        elif match_code == 56:  # Mention and ID limit
+            if (pis_forward == 0):
+                if (pmention <= p['max_mention'] and pmention > p['min_mention'] and
+                        pid <= p['max_id'] and pid > p['min_id']):
+                    append_gate = True
+
+        elif match_code == 67:  # ID limit & Admins
+            if (pid <= p['max_id'] and pid > p['min_id'] and author in p['admins']):
+                append_gate = True
 
         if append_gate:
             newdata.append(post[1])
