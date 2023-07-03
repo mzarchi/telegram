@@ -27,16 +27,16 @@ The most important cell in this notebook is this:
 
 ```
 match_case = 0  # Important param
-dics = cdata(
-    data, match_case,
-    min_id=0, max_id=1000,
+data, dics = cdata(
+    channel, match_case,
+    admins=[],
+    min_id=0, max_id=0,
     min_view=0, max_view=0,
     min_forward=0, max_forward=0,
     min_mention=0, max_mention=0,
     start_time='15:00:00', stop_time='21:00:00',
     start_datetime=tm.timestamp('2010-01-18 00:00', '%Y-%m-%d %H:%M'),
     stop_datetime=tm.timestamp('2010-01-18 00:00', '%Y-%m-%d %H:%M')
-)
 ```
 
 According to the following `match_case` :
