@@ -3,6 +3,7 @@
 .conda/
 .venv/
 *.csv
+*.txt
 test*
 .env
 _*
