@@ -1,5 +1,6 @@
 from telethon.sync import TelegramClient
 from Module import Time, File, Config
+from statistics import mean
 from pytz import timezone
 
 
@@ -345,14 +346,21 @@ def drv(data):
     return day_dict, rte_dict, viw_dict
 
 
-def show_admins(admins: dict):
+def show_admins(admins: dict, view_dict: dict, forw_dict: dict):
     for a in admins.keys():
-        print("admin-id: {:<5s} message-count: {:<8s} admin-name: {}".format(
-            str(a), str(admins[a]['count']), admins[a]['author']))
+        print("admin-id: {:<4s} message-count: {:<8s} avg-view:{:<8s} avg-forw:{:<5s} admin-name: {:<20s}".format(
+            str(a),
+            str(admins[a]['count']),
+            str(int(mean(view_dict[admins[a]['author']]))),
+            str(int(mean(forw_dict[admins[a]['author']]))),
+            admins[a]['author']
+        ))
 
 
 def admins_status(data: dict):
     admins = {}
+    view_dict = {}
+    forw_dict = {}
     dict_key = {}
     counter = 1
 
@@ -367,7 +375,17 @@ def admins_status(data: dict):
                 admins.update({counter: {'author': p['author'], 'count': 1}})
                 counter += 1
 
-    show_admins(admins=admins)
+            if p['author'] in view_dict.keys():
+                view_dict[p['author']].append(p['view'])
+            else:
+                view_dict.update({p['author']: [p['view']]})
+
+            if p['author'] in forw_dict.keys():
+                forw_dict[p['author']].append(p['forward'])
+            else:
+                forw_dict.update({p['author']: [p['forward']]})
+
+    show_admins(admins=admins, view_dict=view_dict, forw_dict=forw_dict)
     return admins
 
 
