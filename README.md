@@ -76,10 +76,10 @@ According to the following `match_case` :
 - [ ] 125 : <b>DateTime</b> & <b>TimeRange</b> & <b>Mention</b> limit
 - [ ] 126 : <b>DateTime</b> & <b>TimeRange</b> & <b>ID</b> limit
 - [ ] 127 : <b>DateTime</b> & <b>TimeRange</b> & <b>Admins</b> limit
-- [ ] 234 : <b>TimeRange</b> & Favorite & <b>Forward</b> limit
-- [ ] 235 : <b>TimeRange</b> & Favorite & <b>Mention</b> limit
-- [ ] 236 : <b>TimeRange</b> & Favorite & <b>ID</b> limit
-- [ ] 237 : <b>TimeRange</b> & Favorite & <b>Admins</b> limit
+- [ ] 234 : <b>TimeRange</b> & <b>View</b> & <b>Forward</b> limit
+- [ ] 235 : <b>TimeRange</b> & <b>View</b> & <b>Mention</b> limit
+- [ ] 236 : <b>TimeRange</b> & <b>View</b> & <b>ID</b> limit
+- [ ] 237 : <b>TimeRange</b> & <b>View</b> & <b>Admins</b> limit
 - [ ] 345 : <b>View</b> & <b>Forward</b> & <b>Mention</b> limit
 - [ ] 346 : <b>View</b> & <b>Forward</b> & <b>ID</b> limit
 - [ ] 347 : <b>View</b> & <b>Forward</b> & <b>Admins</b> limit
