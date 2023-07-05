@@ -4,3 +4,4 @@ requests
 colorama
 telethon
 python-dotenv
+pyfiglet
