@@ -1,10 +1,10 @@
 .ipynb_checkpoints/
+__pycache__/
 .vscode/
 .conda/
 .venv/
+.idea
 *.csv
 *.txt
 test*
 .env
-_*
-.idea
