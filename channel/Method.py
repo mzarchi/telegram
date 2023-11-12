@@ -3,11 +3,17 @@ from Module import Time, File, Config
 from statistics import mean
 from pytz import timezone
 
+import socks
+
 
 async def get(username: str, count: int):
     data = []
     cf = Config()
-    async with TelegramClient('../sessions/test', cf.id, cf.hash) as client:
+
+    host = "127.0.0.1"  # a valid host
+    port = 2080  # a valid port
+    proxy = (socks.SOCKS5, host, port)
+    async with TelegramClient('../sessions/test', cf.id, cf.hash, proxy=proxy) as client:
         for item in await client.get_messages(username, limit=count):
             if item.views is not None:
                 frw = 0
@@ -191,7 +197,7 @@ def cdata(data, match_code, **p):
         author = post[1]['author']
         pmention = post[1]['mention']
         pforward = post[1]['forward']
-        punixtime = post[1]['unixtime']
+        punixtime = post[1]['unixtime'] + 12600 # For Iran
         pis_forward = post[1]['is_forward']
         append_gate = False
 
@@ -390,10 +396,17 @@ def admins_status(data: dict):
 
 
 def merge_admins(admins: dict, merge_list: list):
+    view_dict = {}
+    forw_dict = {}
     for ml in merge_list:
         for i in range(1, len(ml)):
             admins[ml[0]]['count'] += admins[ml[i]]['count']
             admins.pop(ml[i])
+
+            if p['author'] in view_dict.keys():
+                view_dict[p['author']].append(p['view'])
+            else:
+                view_dict.update({p['author']: [p['view']]})
 
     show_admins(admins=admins)
     return admins
